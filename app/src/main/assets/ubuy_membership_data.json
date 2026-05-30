@@ -1,0 +1,831 @@
+{
+  "error": false,
+  "code": "0",
+  "msg": "Something went wrong. Please try again.",
+  "data": {
+    "shipping_section": {
+      "headings": "Shipping Savings",
+      "table_data": {
+        "heading": {
+          "txn_type": "Transaction Type",
+          "order_number": "Order Number",
+          "status": "Order Status",
+          "credit_amount": "Amount",
+          "txn_date_time": "Date"
+        },
+        "values": [
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312604899523",
+            "status": "Complete",
+            "credit_amount": "INR 25,568.00",
+            "txn_date_time": "Apr 29, 2026 12:51 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603834114",
+            "status": "Processing",
+            "credit_amount": "INR 1,410.00",
+            "txn_date_time": "Mar 14, 2026 02:01 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603469814",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 14, 2026 12:51 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603225414",
+            "status": "Processing",
+            "credit_amount": "INR 1,034.00",
+            "txn_date_time": "Mar 14, 2026 11:23 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603498813",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 13, 2026 05:46 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603865313",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 13, 2026 05:41 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603980412",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 12, 2026 04:00 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603559712",
+            "status": "Processing",
+            "credit_amount": "INR 1,034.00",
+            "txn_date_time": "Mar 12, 2026 03:57 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603622412",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 12, 2026 11:17 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603849311",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 04:54 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603956611",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 04:29 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603714711",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 04:16 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603936611",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 04:08 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603565411",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 04:03 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603790111",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 03:55 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603968911",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 11, 2026 03:53 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603590310",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 10, 2026 05:24 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603140510",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 10, 2026 03:28 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603221610",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 10, 2026 03:16 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603801106",
+            "status": "Processing",
+            "credit_amount": "INR 2,444.00",
+            "txn_date_time": "Mar 06, 2026 05:56 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603454106",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 06, 2026 05:55 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603635906",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 06, 2026 05:54 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603214606",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Mar 06, 2026 05:31 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312603279206",
+            "status": "Processing",
+            "credit_amount": "INR 1,504.00",
+            "txn_date_time": "Mar 06, 2026 05:29 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "12602979128",
+            "status": "Processing",
+            "credit_amount": "INR 1,034.00",
+            "txn_date_time": "Feb 28, 2026 03:02 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "12602392825",
+            "status": "Processing",
+            "credit_amount": "INR 1,034.00",
+            "txn_date_time": "Feb 26, 2026 09:02 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312601365719",
+            "status": "Processing",
+            "credit_amount": "INR 1,410.00",
+            "txn_date_time": "Jan 19, 2026 03:58 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312601120619",
+            "status": "Processing",
+            "credit_amount": "INR 1,786.00",
+            "txn_date_time": "Jan 19, 2026 03:01 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312601868613",
+            "status": "Processing",
+            "credit_amount": "INR 1,034.00",
+            "txn_date_time": "Jan 13, 2026 01:06 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312512553211",
+            "status": "Complete",
+            "credit_amount": "INR 2,538.00",
+            "txn_date_time": "Jan 08, 2026 05:03 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312601676305",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Jan 05, 2026 04:45 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312512128810",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Dec 10, 2025 03:41 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312512531210",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Dec 10, 2025 03:32 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312512158210",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Dec 10, 2025 01:57 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312512439710",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Dec 10, 2025 01:51 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "312512300910",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Dec 10, 2025 11:49 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "31113696024",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Dec 10, 2025 11:43 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "31116372717",
+            "status": "Complete",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Nov 17, 2025 03:39 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "31111476017",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Nov 17, 2025 03:37 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "31109667606",
+            "status": "Processing",
+            "credit_amount": "INR 940.00",
+            "txn_date_time": "Nov 05, 2025 01:37 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "31076203908",
+            "status": "Processing",
+            "credit_amount": "INR 2,538.00",
+            "txn_date_time": "Sep 30, 2025 05:07 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "1108345903",
+            "status": "Processing",
+            "credit_amount": "INR 376.00",
+            "txn_date_time": "Oct 03, 2024 09:50 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "1053122520",
+            "status": "Processing",
+            "credit_amount": "INR 376.00",
+            "txn_date_time": "Jul 09, 2024 05:27 PM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "1054692420",
+            "status": "Processing",
+            "credit_amount": "INR 282.00",
+            "txn_date_time": "May 20, 2024 11:10 AM"
+          },
+          {
+            "txn_type": "Fast Shipping Discount",
+            "order_number": "1042907310",
+            "status": "Processing",
+            "credit_amount": "INR 376.00",
+            "txn_date_time": "Apr 16, 2024 12:15 PM"
+          }
+        ]
+      },
+      "filers": {
+        "options": {
+          "2026": "Current Year",
+          "2025": "Last Year",
+          "all": "All Time"
+        },
+        "selected_timeline": "all",
+        "selected_label": "All Time"
+      },
+      "graph": {
+        "heading": "Shipping Discount by Month",
+        "sub_heading": "Total Shipping Discount",
+        "datasets": [
+          {
+            "lables": "Shipping Discount (Amount)",
+            "color": "#4e79a7",
+            "values": {
+              "Apr 2026": 25568,
+              "Mar 2026": 30550,
+              "Feb 2026": 2068,
+              "Jan 2026": 7708,
+              "Dec 2025": 5640,
+              "Nov 2025": 2820,
+              "Sep 2025": 2538,
+              "Oct 2024": 376,
+              "Jul 2024": 376,
+              "May 2024": 282,
+              "Apr 2024": 376
+            }
+          }
+        ]
+      }
+    },
+    "cashback_section": {
+      "headings": "Cashback",
+      "table_data": {
+        "heading": {
+          "txn_type": "Transaction Type",
+          "txn_details": "Transaction Details",
+          "status": "Status",
+          "credit_amount": "Amount",
+          "txn_date_time": "Date"
+        },
+        "values": [
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603834114",
+            "status": "Not Eligible",
+            "credit_amount": "INR 898.64",
+            "txn_date_time": "Mar 14, 2026 02:01 PM",
+            "used_cashback": 0,
+            "cashback_amount": 898.63999999999999
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603469814",
+            "status": "Not Eligible",
+            "credit_amount": "INR 504.78",
+            "txn_date_time": "Mar 14, 2026 12:56 PM",
+            "used_cashback": 0,
+            "cashback_amount": 504.77999999999997
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603225414",
+            "status": "Not Eligible",
+            "credit_amount": "INR 563.06",
+            "txn_date_time": "Mar 14, 2026 11:23 AM",
+            "used_cashback": 0,
+            "cashback_amount": 563.05999999999995
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603498813",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 13, 2026 05:46 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603865313",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 13, 2026 05:41 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603980412",
+            "status": "Not Eligible",
+            "credit_amount": "INR 895.82",
+            "txn_date_time": "Mar 12, 2026 04:02 PM",
+            "used_cashback": 0,
+            "cashback_amount": 895.82000000000005
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603559712",
+            "status": "Not Eligible",
+            "credit_amount": "INR 425.82",
+            "txn_date_time": "Mar 12, 2026 03:57 PM",
+            "used_cashback": 0,
+            "cashback_amount": 425.81999999999999
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603622412",
+            "status": "Not Eligible",
+            "credit_amount": "INR 895.82",
+            "txn_date_time": "Mar 12, 2026 11:17 AM",
+            "used_cashback": 0,
+            "cashback_amount": 895.82000000000005
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603849311",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 04:56 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603956611",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 04:29 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603714711",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 04:16 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603936611",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 04:08 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603565411",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 04:03 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603790111",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 03:55 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603968911",
+            "status": "Not Eligible",
+            "credit_amount": "INR 219.02",
+            "txn_date_time": "Mar 11, 2026 03:53 PM",
+            "used_cashback": 0,
+            "cashback_amount": 219.02000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603590310",
+            "status": "Not Eligible",
+            "credit_amount": "INR 895.82",
+            "txn_date_time": "Mar 10, 2026 05:25 PM",
+            "used_cashback": 0,
+            "cashback_amount": 895.82000000000005
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603140510",
+            "status": "Not Eligible",
+            "credit_amount": "INR 895.82",
+            "txn_date_time": "Mar 10, 2026 03:30 PM",
+            "used_cashback": 0,
+            "cashback_amount": 895.82000000000005
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603221610",
+            "status": "Not Eligible",
+            "credit_amount": "INR 895.82",
+            "txn_date_time": "Mar 10, 2026 03:18 PM",
+            "used_cashback": 0,
+            "cashback_amount": 895.82000000000005
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603801106",
+            "status": "Not Eligible",
+            "credit_amount": "INR 383.52",
+            "txn_date_time": "Mar 06, 2026 05:56 PM",
+            "used_cashback": 0,
+            "cashback_amount": 383.51999999999998
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603454106",
+            "status": "Not Eligible",
+            "credit_amount": "INR 505.72",
+            "txn_date_time": "Mar 06, 2026 05:55 PM",
+            "used_cashback": 0,
+            "cashback_amount": 505.72000000000003
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603635906",
+            "status": "Not Eligible",
+            "credit_amount": "INR 505.72",
+            "txn_date_time": "Mar 06, 2026 05:54 PM",
+            "used_cashback": 0,
+            "cashback_amount": 505.72000000000003
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603214606",
+            "status": "Not Eligible",
+            "credit_amount": "INR 999.22",
+            "txn_date_time": "Mar 06, 2026 05:31 PM",
+            "used_cashback": 0,
+            "cashback_amount": 999.22000000000003
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312603279206",
+            "status": "Not Eligible",
+            "credit_amount": "INR 505.72",
+            "txn_date_time": "Mar 06, 2026 05:29 PM",
+            "used_cashback": 0,
+            "cashback_amount": 505.72000000000003
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #12602979128",
+            "status": "Not Eligible",
+            "credit_amount": "INR 910.86",
+            "txn_date_time": "Feb 28, 2026 03:02 PM",
+            "used_cashback": 0,
+            "cashback_amount": 910.86000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #12602392825",
+            "status": "Not Eligible",
+            "credit_amount": "INR 205.86",
+            "txn_date_time": "Feb 26, 2026 09:03 AM",
+            "used_cashback": 0,
+            "cashback_amount": 205.86000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601365719",
+            "status": "Not Eligible",
+            "credit_amount": "INR 964.44",
+            "txn_date_time": "Jan 19, 2026 03:58 PM",
+            "used_cashback": 0,
+            "cashback_amount": 964.44000000000005
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601120619",
+            "status": "Not Eligible",
+            "credit_amount": "INR 1390.26",
+            "txn_date_time": "Jan 19, 2026 03:01 PM",
+            "used_cashback": 0,
+            "cashback_amount": 1390.26
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601590413",
+            "status": "Not Eligible",
+            "credit_amount": "INR 470",
+            "txn_date_time": "Jan 13, 2026 01:22 PM",
+            "used_cashback": 0,
+            "cashback_amount": 470
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601868613",
+            "status": "Not Eligible",
+            "credit_amount": "INR 470",
+            "txn_date_time": "Jan 13, 2026 01:06 PM",
+            "used_cashback": 0,
+            "cashback_amount": 470
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312512553211",
+            "status": "Not Eligible",
+            "credit_amount": "INR 2242.84",
+            "txn_date_time": "Jan 08, 2026 05:03 PM",
+            "used_cashback": 0,
+            "cashback_amount": 2242.8400000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601523905",
+            "status": "Not Eligible",
+            "credit_amount": "INR 1410",
+            "txn_date_time": "Jan 05, 2026 04:48 PM",
+            "used_cashback": 0,
+            "cashback_amount": 1410
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601827805",
+            "status": "Not Eligible",
+            "credit_amount": "INR 470",
+            "txn_date_time": "Jan 05, 2026 04:47 PM",
+            "used_cashback": 0,
+            "cashback_amount": 470
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312601676305",
+            "status": "Not Eligible",
+            "credit_amount": "INR 631.68",
+            "txn_date_time": "Jan 05, 2026 04:45 PM",
+            "used_cashback": 0,
+            "cashback_amount": 631.67999999999995
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312512128810",
+            "status": "Not Eligible",
+            "credit_amount": "INR 114.68",
+            "txn_date_time": "Dec 10, 2025 03:41 PM",
+            "used_cashback": 0,
+            "cashback_amount": 114.68000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312512439710",
+            "status": "Not Eligible",
+            "credit_amount": "INR 990.76",
+            "txn_date_time": "Dec 10, 2025 01:51 PM",
+            "used_cashback": 0,
+            "cashback_amount": 990.75999999999999
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #312512300910",
+            "status": "Not Eligible",
+            "credit_amount": "INR 4700",
+            "txn_date_time": "Dec 10, 2025 11:49 AM",
+            "used_cashback": 1042.46,
+            "cashback_amount": 4700
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #31113696024",
+            "status": "Not Eligible",
+            "credit_amount": "INR 94.94",
+            "txn_date_time": "Dec 10, 2025 11:43 AM",
+            "used_cashback": 0,
+            "cashback_amount": 94.939999999999998
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #31116372717",
+            "status": "Not Eligible",
+            "credit_amount": "INR 140.06",
+            "txn_date_time": "Nov 17, 2025 03:40 PM",
+            "used_cashback": 140.06,
+            "cashback_amount": 140.06
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #31111476017",
+            "status": "Not Eligible",
+            "credit_amount": "INR 118.44",
+            "txn_date_time": "Nov 17, 2025 03:37 PM",
+            "used_cashback": 118.44,
+            "cashback_amount": 118.44
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #31118182905",
+            "status": "Not Eligible",
+            "credit_amount": "INR 3071.92",
+            "txn_date_time": "Nov 17, 2025 03:29 PM",
+            "used_cashback": 3071.9200000000001,
+            "cashback_amount": 3071.9200000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #31109667606",
+            "status": "Not Eligible",
+            "credit_amount": "INR 161.68",
+            "txn_date_time": "Nov 05, 2025 01:37 PM",
+            "used_cashback": 161.68000000000001,
+            "cashback_amount": 161.68000000000001
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #31076203908",
+            "status": "Not Eligible",
+            "credit_amount": "INR 2357.33",
+            "txn_date_time": "Sep 30, 2025 05:07 PM",
+            "used_cashback": 2357.3299999999999,
+            "cashback_amount": 2357.3299999999999
+          },
+          {
+            "txn_type": "Receive Cashback On Purchase",
+            "txn_details": "Cashback Added for Order #1117934708",
+            "status": "Not Eligible",
+            "credit_amount": "INR 1985.28",
+            "txn_date_time": "Jan 10, 2025 10:25 AM",
+            "used_cashback": 1985.28,
+            "cashback_amount": 1985.28
+          }
+        ]
+      },
+      "filers": {
+        "options": {
+          "2026": "Current Year",
+          "2025": "Last Year",
+          "all": "All Time"
+        },
+        "selected_timeline": "all",
+        "selected_label": "All Time"
+      },
+      "graph": {
+        "heading": "Cashback by Month",
+        "sub_heading": "Total Credited Cashback",
+        "datasets": [
+          {
+            "lables": "Base Cashback",
+            "color": "#59a14f",
+            "values": {
+              "Mar 2026": "11742.48",
+              "Feb 2026": "1116.72",
+              "Jan 2026": "8049.22",
+              "Dec 2025": "5900.38",
+              "Nov 2025": "3492.1",
+              "Sep 2025": "2357.33",
+              "Jan 2025": "1985.28"
+            }
+          },
+          {
+            "lables": "Used Cashback",
+            "color": "#e15759",
+            "values": {
+              "Mar 2026": "0",
+              "Feb 2026": "0",
+              "Jan 2026": "0",
+              "Dec 2025": "1042.46",
+              "Nov 2025": "3492.1",
+              "Sep 2025": "2357.33",
+              "Jan 2025": "1985.28"
+            }
+          }
+        ]
+      }
+    },
+    "savings_section": {
+      "headings": "My Savings",
+      "total_savings": {
+        "heading": "Total savings",
+        "sub_heading": "Shipping and cashback",
+        "currency": "INR",
+        "amount": "112,945.51"
+      },
+      "shipping_savings": {
+        "heading": "Shipping savings",
+        "sub_heading": "Saved on fast delivery",
+        "currency": "INR",
+        "amount": "78,302.00"
+      },
+      "total_cashback": {
+        "heading": "Total cashback",
+        "sub_heading": "Cashback earned from orders",
+        "currency": "INR",
+        "amount": "34,643.51"
+      }
+    }
+  }
+}
