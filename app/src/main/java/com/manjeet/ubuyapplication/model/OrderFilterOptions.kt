@@ -1,4 +1,4 @@
-package com.manjeet.ubuyapplication
+package com.manjeet.ubuyapplication.model
 
 data class OrderFilterOptions(
     val canceled: String,

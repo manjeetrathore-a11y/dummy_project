@@ -1,4 +1,4 @@
-package com.manjeet.ubuyapplication.ui.screens
+package com.manjeet.ubuyapplication.ui.newscreen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -119,16 +118,14 @@ fun FilterSheetContent(onApply: () -> Unit, onClear: () -> Unit) {
         HorizontalDivider(color = Color(0xFFF2F3F5), thickness = 1.dp)
 
         // --- 3. DYNAMIC CONTENT AREA (STABILIZED) ---
-        // weight(1f) here forces the footer to the bottom and
-        // stops the content from pushing the buttons around.
+
         Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-            // If any of these sections (Brand/Color) use LazyColumn,
-            // they will now scroll within this Box boundary safely.
+
             when (selectedCategory) {
                 "Price range" -> PriceRangeSection()
                 "Model" -> ModelSection()
@@ -213,7 +210,7 @@ fun FilterCategoryRow(selectedCategory: String, onCategorySelect: (String) -> Un
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp) // Space between wrapped rows
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         categories.forEach { category ->
             val isSelected = category == selectedCategory
@@ -350,9 +347,8 @@ fun BrandSection() {
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(
-            // Do NOT give it a fixed height here
             modifier = Modifier.fillMaxWidth(),
-            userScrollEnabled = true // Ensure this is true
+            userScrollEnabled = true
         ) {
             items(brandList) { brand ->
                 BrandRow(
@@ -419,7 +415,7 @@ fun BrandRow(brand: BrandItem, isChecked: Boolean, onCheckedChange: (Boolean) ->
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PriceRangeSection() {
-    // FIX 1: Use only ONE state variable for the entire section
+
     var sliderValue by remember { mutableStateOf(15f..85f) }
 
     Column(
@@ -441,7 +437,7 @@ fun PriceRangeSection() {
                 tint = Color.LightGray,
                 modifier = Modifier
                     .size(20.dp)
-                    .clickable { sliderValue = 0f..100f } // Resets the shared state
+                    .clickable { sliderValue = 0f..100f }
             )
         }
 
@@ -473,7 +469,7 @@ fun PriceRangeSection() {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // FIX 2: Slider now updates the SAME variable used by the text inputs
+
         RangeSlider(
             value = sliderValue,
             onValueChange = { sliderValue = it },
@@ -482,10 +478,8 @@ fun PriceRangeSection() {
                 .height(60.dp)
                 // This is the "Hard Lock"
                 .pointerInput(Unit) {
-                    // This wakes up ONLY when a drag starts, then goes back to sleep.
                     detectVerticalDragGestures { change, _ ->
-                        // This 'consumes' the movement so the BottomSheet doesn't see it.
-                        // It keeps the lock active without the lag.
+
                         change.consume()
                     }
                 },
@@ -499,7 +493,6 @@ fun PriceRangeSection() {
     }
 }
 
-// KEEP ONLY THIS VERSION OF THE INPUT BOX
 @Composable
 fun PriceRangeInput(modifier: Modifier = Modifier, value: String) {
     Surface(
@@ -553,10 +546,9 @@ fun ColorSection() {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            // CHANGE THIS: Give it a fixed height so it doesn't "fight" with the Bottom Sheet
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp), // Set a height that fits your design
+                .height(300.dp),
             userScrollEnabled = true,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -611,7 +603,6 @@ fun ColorSection() {
 fun PreviewBrandSelection() {
     androidx.compose.material3.MaterialTheme {
         Surface(color = Color.White) {
-            // Helper to simulate "Brand" being clicked
             FilterSheetContentPreviewHelper(initialCategory = "Brand")
         }
     }
@@ -622,7 +613,6 @@ fun PreviewBrandSelection() {
 fun PreviewPriceRangeSelection() {
     androidx.compose.material3.MaterialTheme {
         Surface(color = Color.White) {
-            // Helper to simulate "Price range" being clicked
             FilterSheetContentPreviewHelper(initialCategory = "Price range")
         }
     }
@@ -635,9 +625,7 @@ fun PreviewPriceRangeSelection() {
 fun FilterSheetContentPreviewHelper(initialCategory: String) {
     var selectedCategory by remember { mutableStateOf(initialCategory) }
 
-    // We pass a modified version of your content here for previewing
-    // Alternatively, just use the real FilterSheetContent and use 'Interactive Mode'
-    // in Android Studio to click between Brand and Price.
+
     FilterSheetContent(onApply = {}, onClear = {})
 }
 
@@ -661,7 +649,6 @@ fun PreviewBrandSectionOnly() {
 fun PreviewFullFilterBrand() {
     androidx.compose.material3.MaterialTheme {
         Surface(color = Color.White) {
-            // This will show the full sheet with 'Brand' logic active
             FilterSheetContent(onApply = {}, onClear = {})
         }
     }

@@ -1,6 +1,8 @@
 package com.manjeet.ubuyapplication
 
-data class Order(
+import com.manjeet.ubuyapplication.model.Item
+
+data class Orderss(
     val address_type: String,
     val consolidation_shipment_message: String,
     val full_address: String,
@@ -16,3 +18,4 @@ data class Order(
     val shipment_data: List<Any>,
     val shipping_method: String
 )
+

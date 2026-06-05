@@ -1,4 +1,4 @@
-package com.manjeet.ubuyapplication.ui.screens
+package com.manjeet.ubuyapplication.ui.newscreen
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
@@ -48,10 +48,11 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.google.gson.Gson
 import com.manjeet.ubuyapplication.R
-import com.manjeet.ubuyapplication.Item
-import com.manjeet.ubuyapplication.Order
-import com.manjeet.ubuyapplication.OrderRepository
-
+//import com.manjeet.ubuyapplication.Item
+import com.manjeet.ubuyapplication.model.Order
+//import com.manjeet.ubuyapplication.OrderRepository
+import com.manjeet.ubuyapplication.model.Item
+import com.manjeet.ubuyapplication.model.OrderRepository
 
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -767,14 +768,26 @@ fun TrackOrderInputScreen(
                         onClick = {
                             focusManager.clearFocus()
                             val currentInput = orderNumberInput.trim()
-                            val matchedOrder = orderRepository?.data?.orders?.find {
-                                it.order_increment_id.equals(currentInput, ignoreCase = true)
-                            }
+
+
+                            val ordersList = orderRepository?.data as? List<Order>
+                                ?: (orderRepository?.data as? List<*>)
+
+                            val matchedOrder = ordersList?.find { item ->
+                                val order = item as? Order
+                                order?.order_increment_id.equals(currentInput, ignoreCase = true)
+                            } as? Order
+
                             if (currentInput.isEmpty() || matchedOrder == null) {
-                                isErrorActive = true; isSuccessActive = false; foundOrderDetails = null
+                                isErrorActive = true
+                                isSuccessActive = false
+                                foundOrderDetails = null
                             } else {
-                                isErrorActive = false; isSuccessActive = true; foundOrderDetails = matchedOrder
+                                isErrorActive = false
+                                isSuccessActive = true
+                                foundOrderDetails = matchedOrder
                             }
+
                             Log.d(logTag, "===============================================")
                             Log.d(logTag, "TRACK BUTTON CLICKED!")
                             Log.d(logTag, "Current input order sequence ID: '$orderNumberInput'")

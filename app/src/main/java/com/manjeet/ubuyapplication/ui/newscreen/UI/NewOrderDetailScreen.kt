@@ -34,8 +34,9 @@ import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.manjeet.ubuyapplication.Order
+import com.manjeet.ubuyapplication.model.Order
 import androidx.compose.ui.tooling.preview.Preview
+
 
 
 @Composable
@@ -223,7 +224,6 @@ fun PackingStatusLayout(
                         )
                     }
 
-                    // Exact Dynamic Total Price straight from your JSON ("KWD22.82")
                     Text(
                         text = order.order_total ?: "KWD 0.00",
                         fontSize = 20.sp,
@@ -904,111 +904,111 @@ fun OrderDetailPage(
 // ========================================================
 //  1. CORRECTED MOCK DATA FOR PREVIEW RENDER
 // ========================================================
-private val mockOrderPreview = Order(
-    order_id = 12345,
-    order_increment_id = "109-873642-11",
-    order_date = "22 May 2026",
-    order_status = "Packing",
-    order_status_en = "Packing",
-    order_total = "₹4,250.00",
-    payment_method = "Credit Card",
-    ship_to = "Manjeet Kumar",
-    full_address = "Sector 5, Mansarovar, Jaipur, Rajasthan - 302020",
-    shipping_method = "Express Delivery",
-    address_type = "Home",
-    consolidation_shipment_message = "",
-    shipment_data = listOf(),
-    items = listOf(
-        com.manjeet.ubuyapplication.Item(
-            name = "Premium Wireless Noise Cancelling Headphones",
-            image = "/example_image.png",
-            item_id = 1
-        )
-    )
-)
-
-// ========================================================
-// 2. PREVIEW FOR PACKING STATUS LAYOUT
-// ========================================================
-@Preview(showBackground = true, name = "Packing Status Layout Preview")
-@Composable
-fun PackingStatusLayoutPreview() {
-    val dummyNavController = NavHostController(androidx.compose.ui.platform.LocalContext.current)
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFF3F4F6))
-    ) {
-        PackingStatusLayout(
-            navController = dummyNavController,
-            order = mockOrderPreview
-        )
-    }
-}
-
-// ========================================================
-//  3. PREVIEW FOR DELIVERED STATUS LAYOUT
-// ========================================================
-@Preview(showBackground = true, name = "Delivered Status Layout Preview")
-@Composable
-fun DeliveredStatusLayoutPreview() {
-    val deliveredMockOrder = mockOrderPreview.copy(
-        order_status = "Delivered",
-        order_status_en = "Delivered"
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFFF3F4F6))
-    ) {
-        DeliveredStatusLayout(
-            order = deliveredMockOrder
-        )
-    }
-}
-
-
-// ========================================================
-//  1. EXACT REAL-JSON MOCK FOR FULL PAGE PREVIEW
-// ========================================================
-private val mockFullPageOrder = Order(
-    order_id = 263564,
-    order_increment_id = "12604986924",
-    ship_to = "Soumalya Hajra",
-    order_date = "24/4/2026",
-    order_total = "KWD22.82", // Real JSON total price
-    order_status = "Processing",
-    order_status_en = "Processing",
-    full_address = "Soumalya HajraZbzbdfsdfgskldfgdhfgisdfhiosdfgsiodfhgsidfghsidfhgsidfghisdfghiosdfghisodfg Zbzbfgsdfhsfdhshshsrjryjeyjeytjetyjetyjetyjefgaudfgsdif, Zbsbhjfgfjjjjjjjjjjjjjjjjjjjjjjjjjjjjjsdfsdfisdfiogshfi, Abdally, Kuwait, KW, 54545445",
-    shipping_method = "express",
-    address_type = "Home",
-    payment_method = "adyen_gpay", // dynamic G Pay binding layout test
-    consolidation_shipment_message = "",
-    shipment_data = arrayListOf(),
-    items = arrayListOf(
-        com.manjeet.ubuyapplication.Item(
-            name = "Tote Bag Tote Bag",
-            image = "https://m.media-amazon.com/images/I/21dCSvpKXuL._AC_SR400_.jpg",
-            item_id = 541950
-        )
-    )
-)
-
-// =======================================================
-//  2. FULL SCREEN ENTRY PREVIEW (OrderDetailPage)
-// =======================================================
-@Preview(showBackground = true, name = "Full Order Detail Screen", showSystemUi = true)
-@Composable
-fun OrderDetailPagePreview() {
-    val dummyNavController = NavHostController(androidx.compose.ui.platform.LocalContext.current)
-
-    OrderDetailPage(
-        navController = dummyNavController,
-        order = mockFullPageOrder,
-        onBack = { /* No-Op for preview */ }
-    )
-}
+//private val mockOrderPreview = Order(
+//    order_id = 12345,
+//    order_increment_id = "109-873642-11",
+//    order_date = "22 May 2026",
+//    order_status = "Packing",
+//    order_status_en = "Packing",
+//    order_total = "₹4,250.00",
+//    payment_method = "Credit Card",
+//    ship_to = "Manjeet Kumar",
+//    full_address = "Sector 5, Mansarovar, Jaipur, Rajasthan - 302020",
+//    shipping_method = "Express Delivery",
+//    address_type = "Home",
+//    consolidation_shipment_message = "",
+//    shipment_data = listOf(),
+//    items = listOf(
+//        com.manjeet.ubuyapplication.model.Item(
+//            name = "Premium Wireless Noise Cancelling Headphones",
+//            image = "/example_image.png",
+//            item_id = 1
+//        )
+//    )
+//)
+//
+//// ========================================================
+//// 2. PREVIEW FOR PACKING STATUS LAYOUT
+//// ========================================================
+//@Preview(showBackground = true, name = "Packing Status Layout Preview")
+//@Composable
+//fun PackingStatusLayoutPreview() {
+//    val dummyNavController = NavHostController(androidx.compose.ui.platform.LocalContext.current)
+//
+//    Box(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .background(Color(0xFFF3F4F6))
+//    ) {
+//        PackingStatusLayout(
+//            navController = dummyNavController,
+//            order = mockOrderPreview
+//        )
+//    }
+//}
+//
+//// ========================================================
+////  3. PREVIEW FOR DELIVERED STATUS LAYOUT
+//// ========================================================
+//@Preview(showBackground = true, name = "Delivered Status Layout Preview")
+//@Composable
+//fun DeliveredStatusLayoutPreview() {
+//    val deliveredMockOrder = mockOrderPreview.copy(
+//        order_status = "Delivered",
+//        order_status_en = "Delivered"
+//    )
+//
+//    Box(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .background(Color(0xFFF3F4F6))
+//    ) {
+//        DeliveredStatusLayout(
+//            order = deliveredMockOrder
+//        )
+//    }
+//}
+//
+//
+//// ========================================================
+////  1. EXACT REAL-JSON MOCK FOR FULL PAGE PREVIEW
+//// ========================================================
+//private val mockFullPageOrder = Order(
+//    order_id = 263564,
+//    order_increment_id = "12604986924",
+//    ship_to = "Soumalya Hajra",
+//    order_date = "24/4/2026",
+//    order_total = "KWD22.82", // Real JSON total price
+//    order_status = "Processing",
+//    order_status_en = "Processing",
+//    full_address = "Soumalya HajraZbzbdfsdfgskldfgdhfgisdfhiosdfgsiodfhgsidfghsidfhgsidfghisdfghiosdfghisodfg Zbzbfgsdfhsfdhshshsrjryjeyjeytjetyjetyjetyjefgaudfgsdif, Zbsbhjfgfjjjjjjjjjjjjjjjjjjjjjjjjjjjjjsdfsdfisdfiogshfi, Abdally, Kuwait, KW, 54545445",
+//    shipping_method = "express",
+//    address_type = "Home",
+//    payment_method = "adyen_gpay", // dynamic G Pay binding layout test
+//    consolidation_shipment_message = "",
+//    shipment_data = arrayListOf(),
+//    items = arrayListOf(
+//        com.manjeet.ubuyapplication.model.Item(
+//            name = "Tote Bag Tote Bag",
+//            image = "https://m.media-amazon.com/images/I/21dCSvpKXuL._AC_SR400_.jpg",
+//            item_id = 541950
+//        )
+//    )
+//)
+//
+//// =======================================================
+////  2. FULL SCREEN ENTRY PREVIEW (OrderDetailPage)
+//// =======================================================
+//@Preview(showBackground = true, name = "Full Order Detail Screen", showSystemUi = true)
+//@Composable
+//fun OrderDetailPagePreview() {
+//    val dummyNavController = NavHostController(androidx.compose.ui.platform.LocalContext.current)
+//
+//    OrderDetailPage(
+//        navController = dummyNavController,
+//        order = mockFullPageOrder,
+//        onBack = { /* No-Op for preview */ }
+//    )
+//}
 
 

@@ -9,7 +9,7 @@ data class UbuyMembershipData (
     @SerializedName("data"  ) var data  : Data?    = Data()
 )
 
-data class Data (
+data class Data(
     @SerializedName("shipping_section" ) var shippingSection : ShippingSection? = ShippingSection(),
     @SerializedName("cashback_section" ) var cashbackSection : CashbackSection? = CashbackSection(),
     @SerializedName("savings_section"  ) var savingsSection  : SavingsSection?  = SavingsSection()
@@ -109,4 +109,31 @@ data class MonthlyValues (
     @SerializedName("Jul 2024" ) var jul2024 : Double? = null, // Just in case agar ye bhi object ya float ho
     @SerializedName("May 2024" ) var may2024 : Double? = null,
     @SerializedName("Apr 2024" ) var apr2024 : Double? = null
+)
+
+
+data class Orders (
+
+    @SerializedName("order_id"                       ) var orderId                      : Int?              = null,
+    @SerializedName("order_increment_id"             ) var orderIncrementId             : String?           = null,
+    @SerializedName("ship_to"                        ) var shipTo                       : String?           = null,
+    @SerializedName("order_date"                     ) var orderDate                    : String?           = null,
+    @SerializedName("order_total"                    ) var orderTotal                   : String?           = null,
+    @SerializedName("order_status"                   ) var orderStatus                  : String?           = null,
+    @SerializedName("order_status_en"                ) var orderStatusEn                : String?           = null,
+    @SerializedName("shipment_data"                  ) var shipmentData                 : ArrayList<String> = arrayListOf(),
+    @SerializedName("full_address"                   ) var fullAddress                  : String?           = null,
+    @SerializedName("shipping_method"                ) var shippingMethod               : String?           = null,
+    @SerializedName("address_type"                   ) var addressType                  : String?           = null,
+    @SerializedName("payment_method"                 ) var paymentMethod                : String?           = null,
+    @SerializedName("consolidation_shipment_message" ) var consolidationShipmentMessage : String?           = null,
+    @SerializedName("items"                          ) var items                        : ArrayList<Items>  = arrayListOf()
+
+)
+data class Items (
+
+    @SerializedName("name"    ) var name   : String? = null,
+    @SerializedName("image"   ) var image  : String? = null,
+    @SerializedName("item_id" ) var itemId : Int?    = null
+
 )

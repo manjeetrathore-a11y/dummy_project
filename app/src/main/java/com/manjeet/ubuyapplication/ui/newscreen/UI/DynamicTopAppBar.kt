@@ -1,4 +1,4 @@
-package com.manjeet.ubuyapplication.ui.screens
+package com.manjeet.ubuyapplication.ui.newscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +37,7 @@ enum class AppScreenState {
 @Composable
 fun DynamicTopAppBar(
     screenState: AppScreenState,
-    currentRoute: String? = null, // 🚀 NAYA PARAMETER: Route check karne ke liye add kiya
+    currentRoute: String? = null,
     orderId: String? = null,
     onBackClick: () -> Unit
 ) {
@@ -48,7 +48,7 @@ fun DynamicTopAppBar(
             .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // 1. LEFT SIDE: Back Arrow (HOME par nahi dikhega, lekin baki screens aur membership route par dikhega)
+        // 1. LEFT SIDE: Back Arrow
         if (screenState != AppScreenState.HOME || currentRoute == "membership") {
             IconButton(onClick = onBackClick) {
                 Icon(
@@ -59,13 +59,13 @@ fun DynamicTopAppBar(
             }
         }
 
-        // 2. CENTER CONTENT: Logo ya text badlega screenState aur currentRoute ke hisab se
+        // 2. CENTER CONTENT
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = if (screenState == AppScreenState.HOME && currentRoute != "membership") Alignment.CenterStart else Alignment.Center
         ) {
             when {
-                // 🚀 FIXED: Agar route membership hai toh text "Ubuy Plus+ Membership" dikhega
+
                 currentRoute == "membership" -> {
                     Text(text = "Ubuy Plus+ Membership", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
@@ -86,7 +86,7 @@ fun DynamicTopAppBar(
             }
         }
 
-        // 3. RIGHT SIDE: Notification icon (HOME par nahi dikhega, lekin baki screens aur membership screen par dikhega)
+        // 3. RIGHT SIDE
         if (screenState != AppScreenState.HOME || currentRoute == "membership") {
             IconButton(onClick = { /* Handle Notification Click */ }) {
                 Icon(
@@ -112,7 +112,7 @@ fun HomeTopAppBarPreview() {
 fun MembershipTopAppBarPreview() {
     DynamicTopAppBar(
         screenState = AppScreenState.HOME,
-        currentRoute = "membership", // Preview check karne ke liye membership test route pass kiya
+        currentRoute = "membership",
         onBackClick = {}
     )
 }
