@@ -1,0 +1,356 @@
+{
+  "error": false,
+  "code": "0",
+  "msg": "success",
+  "data": {
+    "parent_sku": "B0H37Q3N1Q",
+    "product_id": 225987023,
+    "slug": "iphone-air-cloud-white-256gb",
+    "product_title": "iPhone Air Space Black, 512GB",
+    "is_prime": false,
+    "is_in_stock": true,
+    "product_description": "<p> iPhone Air. The thinnest iPhone ever. 6.5-inch display, durable Ceramic Shield front and back, A19 Pro chip, 48MP Fusion camera system, and Center Stage front camera. </p>",
+    "price": 5578,
+    "product_weight": "0.9",
+    "product_images": [
+      {
+        "thumb": "https://m.media-amazon.com/images/I/61ChWONDLcL._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/61ChWONDLcL._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/61ChWONDLcL._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/61ChWONDLcL._AC_SX679_.jpg"
+      },
+      {
+        "thumb": "https://m.media-amazon.com/images/I/51EOQ95D3vL._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/51EOQ95D3vL._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/51EOQ95D3vL._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/51EOQ95D3vL._AC_SX679_.jpg"
+      },
+      {
+        "thumb": "https://m.media-amazon.com/images/I/71kcKh8jn9L._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/71kcKh8jn9L._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/71kcKh8jn9L._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/71kcKh8jn9L._AC_SX679_.jpg"
+      },
+      {
+        "thumb": "https://m.media-amazon.com/images/I/51w0VlrEUwL._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/51w0VlrEUwL._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/51w0VlrEUwL._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/51w0VlrEUwL._AC_SX679_.jpg"
+      },
+      {
+        "thumb": "https://m.media-amazon.com/images/I/61Ib-SZsxvL._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/61Ib-SZsxvL._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/61Ib-SZsxvL._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/61Ib-SZsxvL._AC_SX679_.jpg"
+      },
+      {
+        "thumb": "https://m.media-amazon.com/images/I/71CWZsuI0IL._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/71CWZsuI0IL._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/71CWZsuI0IL._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/71CWZsuI0IL._AC_SX679_.jpg"
+      },
+      {
+        "thumb": "https://m.media-amazon.com/images/I/61iZGyk0BnL._AC_SX342_.jpg",
+        "thumb-list": "https://m.media-amazon.com/images/I/61iZGyk0BnL._AC_SX342_.jpg",
+        "full": "https://m.media-amazon.com/images/I/61iZGyk0BnL._AC_SX569_.jpg",
+        "zoom": "https://m.media-amazon.com/images/I/61iZGyk0BnL._AC_SX679_.jpg"
+      }
+    ],
+    "features": [
+      "SUPER THIN. STRINKINGLY LIGHT. SHOCKINGLY STRONG. The thinnest iPhone ever, with the power of a pro chip inside. At 5.6 mm, iPhone Air is so impossibly thin and light that it nearly disappears in your hand.",
+      "MORE DURABLE THAN ANY PREVIOUS iPHONE Ultralight titanium frame. Ceramic Shield protects the back of iPhone Air, making it 4x more resistant to cracks. And the new Ceramic Shield 2 on the front has 3x better scratch resistance.",
+      "TWO ADVANCED CAMERAS IN ONE 48MP Fusion camera system with 2x optical-quality zoom. Effortlessly frame the perfect shot from right where you are.",
+      "18MP CENTER STAGE FRONT CAMERA Flexible ways to frame your shot. Smarter group selfies, Dual Capture video for simultaneous front and rear recording, and more.",
+      "A19 PRO CHIP. HYPERSPEED. HYPEREFFICIENT. A19 Pro is the most efficient iPhone chip yet. Gives you pro performance in a breakthrough thin and light design.",
+      "ALL-DAY BATTERY LIFE All-day battery life with up to 27 hours of video playback.",
+      "iOS 26. NEW LOOK. EVEN MORE MAGIC. A fresh design with Liquid Glass. Beautiful, delightful, and instantly familiar. With a more vibrant Lock Screen, customizable backgrounds and polls in Messages, Call Screening, and more.",
+      "BUILT FOR APPLE INTELLIGENCE Personal, private, powerful. Write, express yourself, and get things done effortlessly.",
+      "SATELLITE FEATURES If you don t have cell service or Wi-Fi, iPhone can connect to a satellite so you can send and receive messages and Tapbacks. In a severe car crash, iPhone can connect to emergency services when you can t.",
+      "STRONGER CONNECTIVITY. SUPERFAST SPEEDS. Stay connected at faster speeds with secure connections to Wi-Fi 7, 5G networks, and Bluetooth 6, plus eSIM."
+    ],
+    "category": {
+      "level1": {
+        "node_id": 2335752011,
+        "name": "Cell Phones & Accessories"
+      },
+      "level2": {
+        "node_id": 7072561011,
+        "name": "Cell Phones"
+      }
+    },
+    "product_specification": [
+      {
+        "title": "Compatible Cellular Phone Models",
+        "value": "Apple iPhone Air"
+      },
+      {
+        "title": "Color",
+        "value": "Space Black"
+      },
+      {
+        "title": "Form Factor",
+        "value": "Bar"
+      },
+      {
+        "title": "Model Number",
+        "value": "MU693LL/A"
+      },
+      {
+        "title": "Brand",
+        "value": "Apple"
+      },
+      {
+        "title": "Model Name",
+        "value": "iPhone Air"
+      },
+      {
+        "title": "Number of Items",
+        "value": "1"
+      },
+      {
+        "title": "Manufacturer",
+        "value": "Apple"
+      },
+      {
+        "title": "UPC",
+        "value": "195950621464"
+      },
+      {
+        "title": "Mfr Part Number",
+        "value": "MU693LL/A"
+      },
+      {
+        "title": "Built-In Media",
+        "value": "USB Cable"
+      },
+      {
+        "title": "ASIN",
+        "value": "B0FQH6KK7C"
+      },
+      {
+        "title": "Item Weight",
+        "value": "0.9 lbs (410 grams)"
+      }
+    ],
+    "seller_info": {},
+    "dimensions": "",
+    "product_dimensions": "",
+    "package_dimensions": "",
+    "max_qty": 0,
+    "is_active": 1,
+    "delivery_days": 3,
+    "is_size_chart": false,
+    "is_custom_id_product": false,
+    "is_pre_order": false,
+    "model_number": "MU693LL/A",
+    "product_image": "https://m.media-amazon.com/images/I/61ChWONDLcL._AC_SX342_.jpg",
+    "best_seller": false,
+    "is_bundle_product": false,
+    "bundle_products": [],
+    "important_info": [],
+    "what_in_the_box": [
+      "USB Cable"
+    ],
+    "is_custom_product": 0,
+    "ship_from": "Expercom - Apple Premier Partner",
+    "ubuy_sku": "ubuy_B0FQH6KK7C",
+    "original_price": 6644,
+    "ubuy_substore": "usstore",
+    "ubuy_store": "US",
+    "customer_rating": 4.7999999999999998,
+    "energy": "",
+    "energy_popup_url": [],
+    "min_qty": 1,
+    "tech_data": [],
+    "is_non_returnable": false,
+    "is_deal_active": "yes",
+    "product_deal_data": {
+      "deal_duration": 1781014597,
+      "deal_text": "Limited Time Deal",
+      "show_deal_timmer": "no"
+    },
+    "deal_price_options": {
+      "list_price": 6644,
+      "amazon_price": 1429,
+      "deal_price_time": 1781014597
+    },
+    "customer_rating_detail": {},
+    "combination_data": {},
+    "variation_data": [
+      {
+        "heading": "Color",
+        "options": [
+          {
+            "option_id": "ubuy_B0FQH6KK7C",
+            "imgUrl": "https://m.media-amazon.com/images/I/2146jXigxdL._SS64_.jpg",
+            "value": "Space Black",
+            "en_value": "Space Black",
+            "available": true,
+            "selected": true
+          },
+          {
+            "option_id": "ubuy_B0FQGXMZDM",
+            "imgUrl": "https://m.media-amazon.com/images/I/215uIQdhzdL._SS64_.jpg",
+            "value": "Cloud White",
+            "en_value": "Cloud White",
+            "available": true,
+            "selected": false
+          },
+          {
+            "option_id": "ubuy_B0FQGMSB45",
+            "imgUrl": "https://m.media-amazon.com/images/I/21euW-3ov7L._SS64_.jpg",
+            "value": "Light Gold",
+            "en_value": "Light Gold",
+            "available": true,
+            "selected": false
+          },
+          {
+            "option_id": "ubuy_B0FQGDVS64",
+            "imgUrl": "https://m.media-amazon.com/images/I/31KcJgBGsvL._SS64_.jpg",
+            "value": "Sky Blue",
+            "en_value": "Sky Blue",
+            "available": true,
+            "selected": false
+          }
+        ]
+      },
+      {
+        "heading": "Memory Storage Capacity",
+        "options": [
+          {
+            "option_id": "ubuy_B0FQH6KK7C",
+            "imgUrl": "",
+            "value": "512 GB",
+            "en_value": "512 GB",
+            "available": true,
+            "selected": true
+          },
+          {
+            "option_id": "ubuy_B0FQGZX1VS",
+            "imgUrl": "",
+            "value": "256 GB",
+            "en_value": "256 GB",
+            "available": false,
+            "selected": false
+          }
+        ]
+      }
+    ],
+    "chart_data": "",
+    "customization_data": [],
+    "product_update": "2026-06-09 05:20:32",
+    "eligible_for_free_shipping": false,
+    "shipping_pincode_validation": false,
+    "usp_slider": [
+      {
+        "en_title": "Fast Shipping",
+        "title": "Fast Shipping",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/app/usp-icon/fast-delivery.png"
+      },
+      {
+        "en_title": "Free Return",
+        "title": "Free Return",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/app/usp-icon/free-return.png"
+      },
+      {
+        "en_title": "Secure Packaging",
+        "title": "Secure Packaging",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/app/usp-icon/secure-packaging.png"
+      },
+      {
+        "en_title": "100% Original Products",
+        "title": "100% Original Products",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/app/usp-icon/original-products.png"
+      },
+      {
+        "en_title": "PCI DSS Compliance",
+        "title": "PCI DSS Compliance",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/app/usp-icon/pci-dss.png"
+      },
+      {
+        "en_title": "ISO 27001 Certified",
+        "title": "ISO 27001 Certified",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/ubuycom/new-login/iso.png"
+      },
+      {
+        "en_title": "Buy Now Pay Later",
+        "title": "Buy Now Pay Later",
+        "image_path": "https://d2ati23fc66y9j.cloudfront.net/app/usp-icon/pay-later.png"
+      }
+    ],
+    "important_note": "<link href=\"https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\" rel=\"stylesheet\">\n\n\n    <section class=\"pt-5 pb-5 important-info\">\n        <div class=\"container\">\n            <div class=\"important-notes\">\n                <div class=\"heading-sec\">\n                    <h2 class=\"heading\" style=\"font-family:'poppins'; font-weight:600; font-size: 15px !important; padding:0px 5px;\">Important information</h2>\n                </div>\n                <ul>\n                    <li style=\"font-family: 'poppins';font-weight:400; position: relative;padding: 2px 13px 2px 10px;word-break: break-word;font-size: 13px;font-family: 'poppins',sans-serif;margin: 10px 0px;\">\n                        Limitations : For products shipped internationally, please note that any manufacturer warranty may not be valid; manufacturer service options may not be available; product manuals, instructions, and safety warnings may not be in destination country languages; the products (and accompanying materials) may not be designed in accordance with destination country standards, specifications, and labeling requirements; and the products may not conform to destination country voltage and other electrical standards (requiring use of an adapter or converter if appropriate). The recipient is responsible for assuring that the product can be lawfully imported to the destination country. When ordering from Ubuy or its affiliates, the recipient is the importer of record and must comply with all laws and regulations of the destination country.                    </li>\n                    <li style=\"font-family: 'poppins';font-weight:400;position: relative;padding: 2px 13px 2px 10px;word-break: break-word;font-size: 13px;font-family: 'poppins',sans-serif;margin: 10px 0px;\">\n                        Not all the products listed on Ubuy are for sale, as Ubuy is a global search engine. Products are subject to export/trade regulations.                    </li>\n                                    </ul>\n            </div>\n        </div>\n    </section>\n\n",
+    "payment_gateways": [
+      {
+        "image_path": "https://ubuykw.s3.amazonaws.com/ubuycom/homebanner/payment_methods-175369014491.png",
+        "title": "Paypal"
+      },
+      {
+        "image_path": "https://ubuykw.s3.amazonaws.com/ubuycom/homebanner/payment_methods-175368113152.png",
+        "title": "Visa"
+      },
+      {
+        "image_path": "https://ubuykw.s3.amazonaws.com/ubuycom/homebanner/payment_methods-175368114244.png",
+        "title": "Mastercard"
+      },
+      {
+        "image_path": "https://ubuykw.s3.amazonaws.com/ubuycom/homebanner/payment_methods-175370140687.png",
+        "title": "Tamara"
+      }
+    ],
+    "usd_price": "1199",
+    "usd_original_price": "1429",
+    "product_videos": [],
+    "source": "onesearch",
+    "cart_max_qty": 15,
+    "is_restricted": false,
+    "product_url": "https://stage.ubuy.com.sa/en/product/QXMD3N1P4-iphone-17-air-space-black-512-gb",
+    "notify_show": false,
+    "is_show_warranty": true,
+    "category_name": "Cell Phones",
+    "category_id": 7072561011,
+    "dietary_supplement": {},
+    "power_converter_message": "Note: Step Down Voltage Transformer required for using electronics products of US store (110-120). Recommended power converters <a class=\"font-normal theme-color\" href=\"https://stage.ubuy.com.sa/en/removeheaderfooter/index/specialdeals?q=shop-our-suggested-power-converters\" target=\"_blank\">Buy Now</a>.",
+    "shipping": {
+      "setting": {
+        "prime_shipping_days": 8,
+        "prime_shipping_message": {
+          "eng": "Note: Step Down Voltage Transformer required for using electronics products of US store (110-120). Recommended power converters <a class=\"font-normal theme-color\" href=\"https://stage.ubuy.com.sa/en/removeheaderfooter/index/specialdeals?q=shop-our-suggested-power-converters\" target=\"_blank\">Buy Now</a>.",
+          "arb": "Note: Step Down Voltage Transformer required for using electronics products of US store (110-120). Recommended power converters <a class=\"font-normal theme-color\" href=\"https://stage.ubuy.com.sa/en/removeheaderfooter/index/specialdeals?q=shop-our-suggested-power-converters\" target=\"_blank\">Buy Now</a>."
+        },
+        "nonprime_shipping_days": "",
+        "nonprime_shipping_message": {
+          "eng": "Note : This product is not Fulfilled by Ubuy and can take minimum 10 days in delivery. We might cancel the product from the order and refund you if any issue arise with the delivery of this product. \n \nNote: Step Down Voltage Transformer required for using electronics products of US store (110-120). Recommended power converters <a class=\"font-normal theme-color\" href=\"https://stage.ubuy.com.sa/en/removeheaderfooter/index/specialdeals?q=shop-our-suggested-power-converters\" target=\"_blank\">Buy Now</a>.",
+          "arb": "Note : This product is not Fulfilled by Ubuy and can take minimum 10 days in delivery. We might cancel the product from the order and refund you if any issue arise with the delivery of this product. \n \nNote: Step Down Voltage Transformer required for using electronics products of US store (110-120). Recommended power converters <a class=\"font-normal theme-color\" href=\"https://stage.ubuy.com.sa/en/removeheaderfooter/index/specialdeals?q=shop-our-suggested-power-converters\" target=\"_blank\">Buy Now</a>."
+        }
+      }
+    },
+    "is_show_vehicle": false,
+    "brand": "apple",
+    "brand_key": "apple",
+    "bundle_title_message": "",
+    "product_config": {
+      "show_dangerous_note": false,
+      "show_dangerous_note_message": ""
+    },
+    "delivery_text": "Wednesday, June 17",
+    "delivery_text_msg": "Order now and get it around Wednesday, June 17",
+    "preOrderMessage": "",
+    "product_faqs": {},
+    "website_id": 3,
+    "dimension_api_call": false,
+    "important_information": [],
+    "local_important_information": [],
+    "important_information_title": "Important information",
+    "local_important_information_title": "Important information",
+    "local_what_in_the_box": [
+      "USB Cable"
+    ],
+    "what_in_the_box_title": "What's in the box",
+    "local_what_in_the_box_title": "What's in the box",
+    "bought_text": "",
+    "is_customization_active": false,
+    "other_addtocart_parameters": "eyJvbmVfc2VhcmNoX3NvdXJjZSI6Im9uZXNlYXJjaCJ9",
+    "sku": "B0FQH6KK7C",
+    "restricted_curl_url": "https://stage.ubuy.com.sa/en/ubcommon/check-common-details?data=eyJpZCI6MjI1OTg3MDIzLCJzayI6InVidXlfQjBGUUg2S0s3QyIsIndiIjozLCJsZW5ndGgiOiJkMjMyYmEyZTc0MjIxNjUwNmNjZDUxNjBlOGJiYzJlZCIsInBwIjoiMTE5OSIsInR5cGUiOiJwX3IiLCJwbm0iOiJpUGhvbmUgQWlyIFNwYWNlIEJsYWNrLCA1MTJHQiJ9"
+  }
+}

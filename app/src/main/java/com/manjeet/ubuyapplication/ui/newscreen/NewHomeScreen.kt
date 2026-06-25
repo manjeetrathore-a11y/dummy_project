@@ -5,14 +5,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -30,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -38,40 +32,34 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.manjeet.ubuyapplication.R
-import com.manjeet.ubuyapplication.model.Product
+// ── Imports ko double check karein ──
+import com.manjeet.ubuyapplication.model.Products
+//import com.manjeet.ubuyapplication.viewmodel.ProductViewModel // 👈 Agar error aaye toh is path ko project structure se check karein
 import com.manjeet.ubuyapplication.ui.newscreen.AppScreenState
 import com.manjeet.ubuyapplication.ui.newscreen.DynamicTopAppBar
 import com.manjeet.ubuyapplication.utils.SortOption
 import com.manjeet.ubuyapplication.utils.getBrandsForCategory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.compose.ui.tooling.preview.Preview
 import com.manjeet.ubuyapplication.ui.newscreen.BrandLogoCircle
 import com.manjeet.ubuyapplication.ui.newscreen.BrandPageContent
 import com.manjeet.ubuyapplication.ui.newscreen.FilterSheetContent
 import com.manjeet.ubuyapplication.ui.newscreen.ResultsHeader
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import com.manjeet.ubuyapplication.ViewModel.ProductViewModel
 import com.manjeet.ubuyapplication.ui.newscreen.SearchResultItem
-
-
-// ─────────────────────────────────────────────────────────────────────────────
-// NewHomeScreen
-// Layout:  DynamicTopAppBar (hidden in search mode)
-//          └── Sticky Search Bar (always visible)
-//              ├── DEFAULT  → "Home Screen" centered text
-//              ├── FOCUSED  → Recent / Popular / Category suggestions
-//              ├── TYPING   → Live suggestions list
-//              └── RESULTS  → Full product results + brand carousel + sort
-// ─────────────────────────────────────────────────────────────────────────────
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewHomeScreen(
+    viewModel: ProductViewModel, // 👈 Explicit reference pass kiya
     showTopBar: Boolean = true,
     onTrackOrderClick: () -> Unit = {},
-    onProductClick: (Product) -> Unit = {} // 👈 Yeh line add karein
+    onProductClick: (Products) -> Unit = {}
 ){
-
     // ── Search State ──────────────────────────────────────────────────────────
     var searchText          by remember { mutableStateOf("") }
     var isSearchFocused     by remember { mutableStateOf(false) }
@@ -84,7 +72,6 @@ fun NewHomeScreen(
     val isSearchModeActive = isSearchFocused || searchText.isNotEmpty() || showResults
 
     val recentSearches = remember { mutableStateListOf("projector", "apple iphone", "shampoo") }
-
     var currentSort by remember { mutableStateOf(SortOption.RELEVANCE) }
 
     // ── Filter Sheet State ────────────────────────────────────────────────────
@@ -92,7 +79,6 @@ fun NewHomeScreen(
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val scope       = rememberCoroutineScope()
 
-    // ── Brand transition animation ────────────────────────────────────────────
     LaunchedEffect(selectedBrand) {
         if (selectedBrand != null) {
             isTransitioning = true
@@ -101,7 +87,6 @@ fun NewHomeScreen(
         }
     }
 
-    // ── Back Handler ──────────────────────────────────────────────────────────
     BackHandler(enabled = searchText.isNotEmpty() || showResults || selectedBrand != null) {
         when {
             selectedBrand != null -> {
@@ -116,9 +101,7 @@ fun NewHomeScreen(
         }
     }
 
-    // ── Static Data ───────────────────────────────────────────────────────────
-    val productList = remember { buildProductList() }
-
+    // Static collections
     val popularSearches = listOf(
         "iPhone 17", "Samsung S24", "Nike Shoes", "Adidas Sneakers",
         "Men's Jacket", "Girl's Dress", "Denim Jeans", "Puma RS-X"
@@ -132,28 +115,31 @@ fun NewHomeScreen(
         "Electronics"    to R.drawable.headphones
     )
 
-    // ── Derived / Filtered Data ───────────────────────────────────────────────
+    // ── 3. Type Inference Error Fix (Explicit Type Defined) ───────────────────
+    val productList: List<Products> = viewModel.productsList
+
     val displayQuery = searchText.trim().replace(Regex("\\s+"), " ")
 
     val filteredCategories = categories.filter { it.first.contains(displayQuery, ignoreCase = true) }
     val filteredPopular    = popularSearches.filter { it.contains(displayQuery, ignoreCase = true) }.sorted()
 
-    val filteredProducts = productList
-        .filter {
-            it.name.contains(displayQuery, ignoreCase = true) ||
-                    it.category.contains(displayQuery, ignoreCase = true) ||
-                    it.brand.contains(displayQuery, ignoreCase = true)
+    // 👈 'it' aur 'let' inference blocks ko types ke sath declare kiya taaki compiler confuse na ho
+    val filteredProducts: List<Products> = productList
+        .filter { product: Products ->
+            (product.name?.contains(displayQuery, ignoreCase = true) == true) ||
+                    (product.store?.contains(displayQuery, ignoreCase = true) == true) ||
+                    (product.brand?.contains(displayQuery, ignoreCase = true) == true)
         }
-        .let { list ->
+        .let { list: List<Products> ->
             when (currentSort) {
                 SortOption.RELEVANCE     -> list
-                SortOption.PRICE_LOW_HIGH  -> list.sortedBy      { it.price.filter(Char::isDigit).toIntOrNull() ?: 0 }
-                SortOption.PRICE_HIGH_LOW -> list.sortedByDescending { it.price.filter(Char::isDigit).toIntOrNull() ?: 0 }
+                SortOption.PRICE_LOW_HIGH  -> list.sortedBy { item: Products -> item.price ?: 0 }
+                SortOption.PRICE_HIGH_LOW -> list.sortedByDescending { item: Products -> item.price ?: 0 }
             }
         }
 
-    val brandProducts = if (selectedBrand != null)
-        filteredProducts.filter { it.brand.equals(selectedBrand, ignoreCase = true) }
+    val brandProducts: List<Products> = if (selectedBrand != null)
+        filteredProducts.filter { product: Products -> product.brand?.equals(selectedBrand, ignoreCase = true) == true }
     else emptyList()
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -161,7 +147,6 @@ fun NewHomeScreen(
     // ─────────────────────────────────────────────────────────────────────────
     Column(modifier = Modifier.fillMaxSize()) {
 
-        // ── 1. DynamicTopAppBar  (hidden when search is active) ───────────────
         AnimatedVisibility(
             visible = !isSearchModeActive,
             enter   = fadeIn(),
@@ -173,7 +158,7 @@ fun NewHomeScreen(
             )
         }
 
-        // ── 2. Sticky Search Bar ──────────────────────────────────────────────
+        // Sticky Search Bar
         Surface(
             modifier      = Modifier.fillMaxWidth(),
             color         = Color.White,
@@ -186,9 +171,11 @@ fun NewHomeScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
-                    value         = searchText,
-                    onValueChange = {
-                        searchText    = it
+                    value         = viewModel.searchQuery, // 👈 FIXED: Direct ViewModel ki state se read karein
+                    onValueChange = { it ->
+                        // 🌟 FIXED: ViewModel ko live batayein taaki 'onSearchQueryChanged' trigger ho aur unused na rahe
+                        viewModel.onSearchQueryChanged(it)
+
                         showResults   = false
                         selectedBrand = null
                     },
@@ -203,7 +190,7 @@ fun NewHomeScreen(
                         IconButton(onClick = {
                             if (isSearchModeActive) {
                                 focusManager.clearFocus()
-                                searchText    = ""
+                                viewModel.clearSearch() // 👈 FIXED: Search reset method call kiya
                                 showResults   = false
                                 selectedBrand = null
                             }
@@ -217,10 +204,11 @@ fun NewHomeScreen(
                     },
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     keyboardActions = KeyboardActions(onSearch = {
-                        val clean = searchText.trim().replace(Regex("\\s+"), " ")
+                        // Keyboard ka search button dabane par action logic
+                        val clean = viewModel.searchQuery.trim().replace(Regex("\\s+"), " ")
                         if (clean.isNotBlank()) {
-                            searchText            = clean
-                            previousSearchQuery   = clean
+                            viewModel.onSearchQueryChanged(clean) // 👈 FIXED: Final clean string data filter apply kiya
+
                             if (!recentSearches.contains(clean)) recentSearches.add(0, clean)
                             showResults           = true
                             focusManager.clearFocus()
@@ -238,26 +226,22 @@ fun NewHomeScreen(
             }
         }
 
-        // ── 3. Body Content ───────────────────────────────────────────────────
+        // Body Content
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFFEFF1F5))
         ) {
-
-            // ── CASE A: Brand Page ────────────────────────────────────────────
             if (selectedBrand != null) {
                 BrandPageContent(
                     brandName    = selectedBrand!!,
-                    products     = brandProducts,
+                    products     = emptyList(),
                     isTransitioning = isTransitioning,
                     currentSort  = currentSort,
                     onSortClick  = { currentSort = currentSort.next() },
-                    onProductClick = onProductClick // 👈 Yeh parameter add karein
+                    onProductClick = {}
                 )
             }
-
-            // ── CASE B: Search overlay (focused / typing / results) ───────────
             else if (isSearchModeActive) {
                 SearchOverlay(
                     searchText         = searchText,
@@ -284,15 +268,12 @@ fun NewHomeScreen(
                     onProductClick     = onProductClick
                 )
             }
-
-            // ── CASE C: Default Home Content ──────────────────────────────────
             else {
                 DefaultHomeContent()
             }
         }
     }
 
-    // ── Filter Bottom Sheet ───────────────────────────────────────────────────
     if (showFilterSheet) {
         ModalBottomSheet(
             onDismissRequest = { showFilterSheet = false },
@@ -306,6 +287,7 @@ fun NewHomeScreen(
                     .fillMaxHeight(0.75f)
             ) {
                 FilterSheetContent(
+                    viewModel = viewModel, // 👈 SYSTEM UPDATE: Yeh line add kar dijiye error chali jayegi!
                     onApply = {
                         scope.launch { sheetState.hide() }.invokeOnCompletion {
                             if (!sheetState.isVisible) showFilterSheet = false
@@ -318,10 +300,6 @@ fun NewHomeScreen(
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// DEFAULT HOME CONTENT  — shown before search is activated
-// Shows "Home Screen" text centred, as per your requirement
-// ─────────────────────────────────────────────────────────────────────────────
 @Composable
 private fun DefaultHomeContent() {
     Box(
@@ -338,13 +316,6 @@ private fun DefaultHomeContent() {
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SEARCH OVERLAY
-// Handles all 3 search states:
-//   State 1 — Focused, empty search  → recent + recently viewed
-//   State 2 — Typing suggestions     → popular / products / categories / recent
-//   State 3 — Results page           → full product list + brand row + sort
-// ─────────────────────────────────────────────────────────────────────────────
 @Composable
 private fun SearchOverlay(
     searchText         : String,
@@ -352,7 +323,7 @@ private fun SearchOverlay(
     displayQuery       : String,
     recentSearches     : MutableList<String>,
     filteredPopular    : List<String>,
-    filteredProducts   : List<Product>,
+    filteredProducts   : List<Products>,
     filteredCategories : List<Pair<String, Int>>,
     currentSort        : SortOption,
     onSortToggle       : () -> Unit,
@@ -360,7 +331,7 @@ private fun SearchOverlay(
     onSearchTermClick  : (String) -> Unit,
     onBrandClick       : (String) -> Unit,
     onClearRecent      : () -> Unit,
-    onProductClick     : (Product) -> Unit
+    onProductClick     : (Products) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -368,10 +339,7 @@ private fun SearchOverlay(
             .background(Color.White)
             .padding(horizontal = 16.dp)
     ) {
-
-        // ── STATE 1: Empty search bar focused ─────────────────────────────────
         if (searchText.isEmpty() && !showResults) {
-            // Recent Searches header
             Row(
                 modifier              = Modifier.fillMaxWidth().padding(top = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -402,7 +370,6 @@ private fun SearchOverlay(
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), thickness = 1.dp, color = Color(0xFFF2F3F5))
 
-            // Recently Viewed placeholder
             Text("Recently viewed", color = Color(0xFF757575), fontSize = 14.sp, fontWeight = FontWeight.Bold)
             Row(
                 modifier          = Modifier.fillMaxWidth().padding(vertical = 12.dp),
@@ -415,12 +382,9 @@ private fun SearchOverlay(
                 Text("Recently viewed item placeholder...", fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
             }
         }
-
-        // ── STATE 2: Typing — live suggestions ───────────────────────────────
         else if (searchText.isNotEmpty() && !showResults) {
             Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
 
-                // Popular searches
                 if (filteredPopular.isNotEmpty()) {
                     Text("Popular searches", color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
@@ -440,33 +404,27 @@ private fun SearchOverlay(
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), thickness = 1.dp, color = Color(0xFFF2F3F5))
                 }
 
-                // Products mini list
                 if (filteredProducts.isNotEmpty()) {
                     Text("Products", color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(vertical = 8.dp))
-                    filteredProducts.take(3).forEach { product ->
+                    filteredProducts.take(3).forEach { product: Products -> // 👈 Explicit type parameter fix
                         Row(
                             modifier          = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
-                                .clickable { onSearchTermClick(product.name) },
+                                .clickable { onSearchTermClick(product.name ?: "") },
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Image(
-                                painter           = painterResource(id = product.image),
-                                contentDescription = null,
-                                modifier          = Modifier
-                                    .size(45.dp)
-                                    .background(Color(0xFFF9F9F9), RoundedCornerShape(4.dp))
-                            )
+                            Box(modifier = Modifier.size(45.dp).background(Color(0xFFF9F9F9), RoundedCornerShape(4.dp)), contentAlignment = Alignment.Center) {
+                                Icon(Icons.Default.Search, contentDescription = null, tint = Color.LightGray)
+                            }
                             Spacer(modifier = Modifier.width(12.dp))
-                            Text(text = product.name, fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Medium)
+                            Text(text = product.name ?: "", fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, fontWeight = FontWeight.Medium)
                         }
                     }
                     HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp), thickness = 1.dp, color = Color(0xFFF2F3F5))
                 }
 
-                // Categories grid
                 if (filteredCategories.isNotEmpty()) {
                     Text("Categories", color = Color(0xFF757575), fontSize = 14.sp, fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(vertical = 12.dp))
@@ -498,7 +456,6 @@ private fun SearchOverlay(
                     HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp), thickness = 1.dp, color = Color(0xFFF2F3F5))
                 }
 
-                // Recent searches (bottom of suggestions)
                 Text("Recent searches", color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                 recentSearches.take(2).forEach { term ->
                     Row(
@@ -513,10 +470,8 @@ private fun SearchOverlay(
                 Spacer(modifier = Modifier.height(100.dp))
             }
         }
-
-        // ── STATE 3: Results page ─────────────────────────────────────────────
         else if (showResults) {
-            val currentCategory  = filteredProducts.firstOrNull()?.category ?: searchText
+            val currentCategory  = filteredProducts.firstOrNull()?.store ?: searchText
             val relevantBrands   = getBrandsForCategory(currentCategory)
 
             ResultsHeader(
@@ -526,22 +481,28 @@ private fun SearchOverlay(
                 onSortClick = onSortToggle,
                 onFilterClick = onFilterClick
             )
-
             LazyColumn(
                 modifier       = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 16.dp)
+                contentPadding = PaddingValues(bottom = 16.dp, start = 16.dp, end = 16.dp) // 👈 Padding badhai taaki cards chipke na
             ) {
-                itemsIndexed(filteredProducts) { index, product ->
+                itemsIndexed(filteredProducts) { index: Int, product: Products -> // Explicit type item lambda fix
+
+                    // 🌟 FIXED: Plain Text Box ko hata kar hamara premium SearchResultItem card lagaya
                     SearchResultItem(
                         product = product,
                         onProductClick = onProductClick
                     )
 
-                    // Brand carousel after 4th item
+
                     if (index == 3 && relevantBrands.isNotEmpty()) {
                         Column(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)) {
-                            Text("Top Brands", fontWeight = FontWeight.Bold, fontSize = 18.sp,
-                                modifier = Modifier.padding(16.dp, 12.dp))
+                            Text(
+                                text = "Top Brands",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                modifier = Modifier.padding(16.dp, 12.dp)
+                            )
                             LazyRow(
                                 modifier       = Modifier.fillMaxWidth(),
                                 contentPadding = PaddingValues(horizontal = 16.dp),
@@ -564,9 +525,6 @@ private fun SearchOverlay(
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// HELPER — SortOption cycle
-// ─────────────────────────────────────────────────────────────────────────────
 private fun SortOption.next() = when (this) {
     SortOption.RELEVANCE      -> SortOption.PRICE_LOW_HIGH
     SortOption.PRICE_LOW_HIGH -> SortOption.PRICE_HIGH_LOW
@@ -574,154 +532,113 @@ private fun SortOption.next() = when (this) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// HELPER — Product list (moved here to keep the composable clean)
-// ─────────────────────────────────────────────────────────────────────────────
-private fun buildProductList(): List<Product> = listOf(
-    // PHONES
-    Product("Apple iPhone 17 Pro Max Ultra",  "£1299", R.drawable.img_4,  "Mobiles", "APPLE"),
-    Product("Apple iPhone 16 Pro Plus",       "£1099", R.drawable.img_7,  "Mobiles", "APPLE"),
-    Product("Apple iPhone 15 Silicone Case",  "£45",   R.drawable.img_6,  "Mobiles", "APPLE"),
-    Product("Samsung Galaxy S24 Ultra 5G",    "£1149", R.drawable.img_8,  "Mobiles", "SAMSUNG"),
-    Product("Samsung Galaxy Z Fold 5",        "£1599", R.drawable.img_9,  "Mobiles", "SAMSUNG"),
-    Product("Samsung Galaxy A54 128GB",       "£349",  R.drawable.img_11, "Mobiles", "SAMSUNG"),
-
-    // SHOES
-    Product("Nike Air Jordan 1 Retro High",   "£165",  R.drawable.img_15, "Shoes", "NIKE"),
-    Product("Nike Air Max 270 Running Shoes", "£130",  R.drawable.img_16, "Shoes", "NIKE"),
-    Product("Adidas Originals Superstar",     "£85",   R.drawable.img_17, "Shoes", "ADIDAS"),
-    Product("Adidas Ultraboost Light",        "£170",  R.drawable.img_18, "Shoes", "ADIDAS"),
-    Product("Puma RS-X Reinvent Sneakers",    "£95",   R.drawable.img_19, "Shoes", "PUMA"),
-    Product("Puma Velocity Nitro 2",          "£110",  R.drawable.img_20, "Shoes", "PUMA"),
-
-    // MEN'S FASHION
-    Product("Men's Leather Biker Jacket",     "£89",   R.drawable.img_21, "Men's Fashion", "FASHION"),
-    Product("Men's Slim Fit Denim Jeans",     "£45",   R.drawable.img_22, "Men's Fashion", "FASHION"),
-    Product("Men's Puffer Winter Jacket",     "£120",  R.drawable.img_23, "Men's Fashion", "FASHION"),
-    Product("Men's Straight Leg Blue Jeans",  "£38",   R.drawable.img_24, "Men's Fashion", "FASHION"),
-
-    // GIRL'S FASHION
-    Product("Girl's Floral Summer Dress",     "£32",   R.drawable.img_25, "Girl's Fashion", "FASHION"),
-    Product("Girl's Cotton Party Top",        "£18",   R.drawable.img_26, "Girl's Fashion", "FASHION"),
-    Product("Girl's Denim Skirt and Top Set", "£40",   R.drawable.img_27, "Girl's Fashion", "FASHION"),
-    Product("Girl's Pink Princess Gown",      "£55",   R.drawable.img_28, "Girl's Fashion", "FASHION"),
-
-    // ELECTRONICS & HOME
-    Product("Sony WH-1000XM5 Headphones",     "£320",  R.drawable.img_29, "ELECTRONICS & HOME", "SONY"),
-    Product("Wireless Bluetooth Speaker",     "£55",   R.drawable.img_32, "ELECTRONICS & HOME", "TECH"),
-    Product("Logitech Mechanical Keyboard",   "£110",  R.drawable.img_30, "ELECTRONICS & HOME", "LOGITECH"),
-    Product("Ergonomic Mesh Office Chair",    "£210",  R.drawable.img_31, "ELECTRONICS & HOME", "FURNITURE")
-)
-
-
-
-// ─────────────────────────────────────────────────────────────────────────────
 // COMPOSE COMPOSE STUDIO PREVIEWS
 // ─────────────────────────────────────────────────────────────────────────────
-
-@Preview(name = "1. Default Base Empty State", showBackground = true, backgroundColor = 0xFFF9FAFB)
-@Composable
-fun NewHomeScreenDefaultPreview() {
-    MaterialTheme {
-        NewHomeScreen(
-            showTopBar = false,
-            onTrackOrderClick = {}
-        )
-    }
-}
-
-@Preview(name = "2. Search View suggestions layer", showBackground = true)
-@Composable
-fun NewHomeScreenSearchActivePreview() {
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-            val recentSearches = remember { mutableStateListOf("projector", "apple iphone", "shampoo") }
-            val popularSearches = listOf("iPhone 17", "Samsung S24", "Nike Shoes", "Adidas Sneakers")
-            val categoriesMock = listOf(
-                "Mobiles" to R.drawable.img_7,
-                "Shoes" to R.drawable.img_12
-            )
-
-            SearchOverlay(
-                searchText = "",
-                showResults = false,
-                displayQuery = "",
-                recentSearches = recentSearches,
-                filteredPopular = popularSearches,
-                filteredProducts = emptyList(),
-                filteredCategories = categoriesMock,
-                currentSort = SortOption.RELEVANCE,
-                onSortToggle = {},
-                onFilterClick = {},
-                onSearchTermClick = {},
-                onBrandClick = {},
-                onClearRecent = {},
-                onProductClick = {}            )
-        }
-    }
-}
-
-@Preview(name = "3. Search active with filtering keywords typing", showBackground = true)
-@Composable
-fun NewHomeScreenSearchTypingPreview() {
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-            val recentSearches = remember { mutableStateListOf("projector", "apple iphone") }
-            val popularSearches = listOf("iPhone 17", "iPhone 16 Pro Plus")
-            val categoriesMock = listOf("Mobiles" to R.drawable.img_7)
-            val productsMock = listOf(
-                Product("Apple iPhone 17 Pro Max Ultra", "£1299", R.drawable.img_4, "Mobiles", "APPLE"),
-                Product("Apple iPhone 16 Pro Plus", "£1099", R.drawable.img_7, "Mobiles", "APPLE")
-            )
-
-            SearchOverlay(
-                searchText = "Apple",
-                showResults = false,
-                displayQuery = "Apple",
-                recentSearches = recentSearches,
-                filteredPopular = popularSearches,
-                filteredProducts = productsMock,
-                filteredCategories = categoriesMock,
-                currentSort = SortOption.RELEVANCE,
-                onSortToggle = {},
-                onFilterClick = {},
-                onSearchTermClick = {},
-                onBrandClick = {},
-                onClearRecent = {},
-                onProductClick = {}
-            )
-        }
-    }
-}
-@Preview(name = "4. Final Search Product Results View", showBackground = true)
-@Composable
-fun NewHomeScreenProductResultsPreview() {
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
-            val mockRecentSearches = remember { mutableStateListOf("projector") }
-            val mockProductsResultList = listOf(
-                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_4, "Mobiles", "Apple"),
-                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_6, "Mobiles", "Apple"),
-                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_7, "Mobiles", "Apple"),
-                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_4, "Mobiles", "Apple")
-            )
-            val mockCategories = listOf("Mobiles" to R.drawable.img_7)
-
-            SearchOverlay(
-                searchText = "iPhone 17 case",
-                showResults = true,
-                displayQuery = "iPhone 17 case",
-                recentSearches = mockRecentSearches,
-                filteredPopular = emptyList(),
-                filteredProducts = mockProductsResultList,
-                filteredCategories = mockCategories,
-                currentSort = SortOption.RELEVANCE,
-                onSortToggle = {},
-                onFilterClick = {},
-                onSearchTermClick = {},
-                onBrandClick = {},
-                onClearRecent = {},
-                onProductClick = {}
-            )
-        }
-    }
-}
+//
+//@Preview(name = "1. Default Base Empty State", showBackground = true, backgroundColor = 0xFFF9FAFB)
+//@Composable
+//fun NewHomeScreenDefaultPreview() {
+//    MaterialTheme {
+//        NewHomeScreen(
+//            showTopBar = false,
+//            onTrackOrderClick = {}
+//        )
+//    }
+//}
+//
+//@Preview(name = "2. Search View suggestions layer", showBackground = true)
+//@Composable
+//fun NewHomeScreenSearchActivePreview() {
+//    MaterialTheme {
+//        Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
+//            val recentSearches = remember { mutableStateListOf("projector", "apple iphone", "shampoo") }
+//            val popularSearches = listOf("iPhone 17", "Samsung S24", "Nike Shoes", "Adidas Sneakers")
+//            val categoriesMock = listOf(
+//                "Mobiles" to R.drawable.img_7,
+//                "Shoes" to R.drawable.img_12
+//            )
+//
+//            SearchOverlay(
+//                searchText = "",
+//                showResults = false,
+//                displayQuery = "",
+//                recentSearches = recentSearches,
+//                filteredPopular = popularSearches,
+//                filteredProducts = emptyList(),
+//                filteredCategories = categoriesMock,
+//                currentSort = SortOption.RELEVANCE,
+//                onSortToggle = {},
+//                onFilterClick = {},
+//                onSearchTermClick = {},
+//                onBrandClick = {},
+//                onClearRecent = {},
+//                onProductClick = {}            )
+//        }
+//    }
+//}
+//
+//@Preview(name = "3. Search active with filtering keywords typing", showBackground = true)
+//@Composable
+//fun NewHomeScreenSearchTypingPreview() {
+//    MaterialTheme {
+//        Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
+//            val recentSearches = remember { mutableStateListOf("projector", "apple iphone") }
+//            val popularSearches = listOf("iPhone 17", "iPhone 16 Pro Plus")
+//            val categoriesMock = listOf("Mobiles" to R.drawable.img_7)
+//            val productsMock = listOf(
+//                Product("Apple iPhone 17 Pro Max Ultra", "£1299", R.drawable.img_4, "Mobiles", "APPLE"),
+//                Product("Apple iPhone 16 Pro Plus", "£1099", R.drawable.img_7, "Mobiles", "APPLE")
+//            )
+//
+//            SearchOverlay(
+//                searchText = "Apple",
+//                showResults = false,
+//                displayQuery = "Apple",
+//                recentSearches = recentSearches,
+//                filteredPopular = popularSearches,
+//                filteredProducts = productsMock,
+//                filteredCategories = categoriesMock,
+//                currentSort = SortOption.RELEVANCE,
+//                onSortToggle = {},
+//                onFilterClick = {},
+//                onSearchTermClick = {},
+//                onBrandClick = {},
+//                onClearRecent = {},
+//                onProductClick = {}
+//            )
+//        }
+//    }
+//}
+//@Preview(name = "4. Final Search Product Results View", showBackground = true)
+//@Composable
+//fun NewHomeScreenProductResultsPreview() {
+//    MaterialTheme {
+//        Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
+//            val mockRecentSearches = remember { mutableStateListOf("projector") }
+//            val mockProductsResultList = listOf(
+//                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_4, "Mobiles", "Apple"),
+//                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_6, "Mobiles", "Apple"),
+//                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_7, "Mobiles", "Apple"),
+//                Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]...", "£29.99", R.drawable.img_4, "Mobiles", "Apple")
+//            )
+//            val mockCategories = listOf("Mobiles" to R.drawable.img_7)
+//
+//            SearchOverlay(
+//                searchText = "iPhone 17 case",
+//                showResults = true,
+//                displayQuery = "iPhone 17 case",
+//                recentSearches = mockRecentSearches,
+//                filteredPopular = emptyList(),
+//                filteredProducts = mockProductsResultList,
+//                filteredCategories = mockCategories,
+//                currentSort = SortOption.RELEVANCE,
+//                onSortToggle = {},
+//                onFilterClick = {},
+//                onSearchTermClick = {},
+//                onBrandClick = {},
+//                onClearRecent = {},
+//                onProductClick = {}
+//            )
+//        }
+//    }
+//}

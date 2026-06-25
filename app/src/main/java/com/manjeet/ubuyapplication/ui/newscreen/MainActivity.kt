@@ -15,13 +15,7 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -38,9 +32,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.gson.Gson
+import com.manjeet.ubuyapplication.R
+import com.manjeet.ubuyapplication.ViewModel.ProductViewModel
 import com.manjeet.ubuyapplication.model.Order
 import com.manjeet.ubuyapplication.model.OrderRepository
-import com.manjeet.ubuyapplication.model.Product
+import com.manjeet.ubuyapplication.model.ProductSectionsState
+// ── Naye Data Models aur ViewModel Imports ──
+import com.manjeet.ubuyapplication.model.Products
 import com.manjeet.ubuyapplication.ui.newscreen.UI.OrderDetailPage
 import com.manjeet.ubuyapplication.ui.newscreen.UI.NewOrderListScreen
 import com.manjeet.ubuyapplication.ui.newscreen.UI.AccountTabScreen
@@ -48,9 +46,11 @@ import com.manjeet.ubuyapplication.ui.newscreen.UI.UbuyMembershipScreen
 import com.manjeet.ubuyapplication.ui.newscreen.AppScreenState
 import com.manjeet.ubuyapplication.ui.newscreen.DynamicTopAppBar
 import com.manjeet.ubuyapplication.ui.newscreen.TrackOrderInputScreen
+import com.manjeet.ubuyapplication.ui.newscreen.UI.ProductDescriptionScreen
 import com.manjeet.ubuyapplication.ui.screens.NewHomeScreen
-//import com.manjeet.ubuyapplication.ui.screens.BrandPageContent
-import com.manjeet.ubuyapplication.ui.screens.ProductDetailScreen // Added detail screen import
+// ── FIXED: Purani Screen ki jagah naya Route import kiya ──
+//import com.manjeet.ubuyapplication.ui.screens.ProductDetailRoute
+import com.manjeet.ubuyapplication.ui.screens.ProductDetailScreen
 import com.manjeet.ubuyapplication.viewmodel.MembershipViewModel
 import com.manjeet.ubuyapplication.utils.SortOption
 
@@ -79,6 +79,14 @@ fun AppNavigation() {
 
     val context = LocalContext.current
 
+    // ── Shared ViewModel Initialize aur Data Loading ──
+    val productViewModel: ProductViewModel = viewModel()
+    LaunchedEffect(Unit) {
+        if (productViewModel.productsList.isEmpty()) {
+            productViewModel.loadProductsFromAssets(context)
+        }
+    }
+
     val parsedOrderRepository: OrderRepository? = remember {
         try {
             val jsonString = context.assets.open("order_response_data.json").bufferedReader()
@@ -92,8 +100,6 @@ fun AppNavigation() {
     val jsonOrdersList = parsedOrderRepository?.data?.orders ?: emptyList()
     var currentScreenState by remember { mutableStateOf(AppScreenState.HOME) }
     var selectedOrder by remember { mutableStateOf<Order?>(null) }
-
-    var selectedProductForDetail by remember { mutableStateOf<Product?>(null) }
 
     LaunchedEffect(currentRoute) {
         currentScreenState = when {
@@ -122,7 +128,7 @@ fun AppNavigation() {
         topBar = {
             if (currentScreenState != AppScreenState.ORDER_DETAIL &&
                 currentRoute != BottomNavItem.Account.route &&
-                currentRoute != "product_detail" && // Dynamic TopBar hide condition for product detail
+                currentRoute?.startsWith("product_detail") != true &&
                 currentRoute != BottomNavItem.Home.route) {
 
                 DynamicTopAppBar(
@@ -134,7 +140,6 @@ fun AppNavigation() {
             }
         },
         bottomBar = {
-            // Keep tabs active only on core home/category landing views
             if (currentRoute == BottomNavItem.Home.route ||
                 currentRoute == BottomNavItem.Category.route ||
                 currentRoute == BottomNavItem.Cart.route ||
@@ -172,7 +177,7 @@ fun AppNavigation() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
-                    if (currentScreenState == AppScreenState.ORDER_DETAIL || currentRoute == "product_detail")
+                    if (currentScreenState == AppScreenState.ORDER_DETAIL || currentRoute?.startsWith("product_detail") == true)
                         androidx.compose.foundation.layout.PaddingValues(0.dp)
                     else innerPadding
                 )
@@ -182,14 +187,17 @@ fun AppNavigation() {
                 startDestination = BottomNavItem.Home.route,
                 modifier = Modifier.fillMaxSize()
             ) {
-                // TAB 1: INTEGRATED SMART HOME SCREEN ENTRY
+                // TAB 1: NEW HOME SCREEN
                 composable(BottomNavItem.Home.route) {
                     NewHomeScreen(
+                        viewModel = productViewModel,
                         showTopBar = false,
                         onTrackOrderClick = { navController.navigate("trackOrder") },
-                        onProductClick = { clickedProduct: Product ->
-                            selectedProductForDetail = clickedProduct
-                            navController.navigate("product_detail")
+                        onProductClick = { clickedProduct: Products ->
+                            productViewModel.selectProduct(clickedProduct)
+                            // ✅ FIXED: Ab product click hone par SKU dynamic link pass hoga
+                            val skuId = clickedProduct.ubuySku ?: "default_id"
+                            navController.navigate("product_detail/$skuId")
                         }
                     )
                 }
@@ -221,13 +229,29 @@ fun AppNavigation() {
                     )
                 }
 
-                // 🆕 SUB-ROUTE: DYNAMIC BRAND LISTING VIEW CONTAINER
+                // SUB-ROUTE: DYNAMIC BRAND LISTING VIEW CONTAINER
                 composable("brand_page") {
                     var sortOption by remember { mutableStateOf(SortOption.RELEVANCE) }
 
                     val mockBrandProducts = listOf(
-                        Product("CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]", "£29.99", com.manjeet.ubuyapplication.R.drawable.img_4, "Electronics", "Roborock"),
-                        Product("Roborock Qrevo Series Robot Vacuum and Mop, 8000Pa Suction, Upgraded Auto Mop", "£29.00", com.manjeet.ubuyapplication.R.drawable.img_4, "Electronics", "Roborock")
+                        Products(
+                            ubuySku = "mock_sku_1",
+                            name = "CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection]",
+                            price = 29,
+                            discount = 32,
+                            store = "Electronics",
+                            brand = "Roborock",
+                            country = "Global Store"
+                        ),
+                        Products(
+                            ubuySku = "mock_sku_2",
+                            name = "Roborock Qrevo Series Robot Vacuum and Mop, 8000Pa Suction, Upgraded Auto Mop",
+                            price = 29,
+                            discount = 15,
+                            store = "Electronics",
+                            brand = "Roborock",
+                            country = "Global Store"
+                        )
                     )
 
                     BrandPageContent(
@@ -238,30 +262,50 @@ fun AppNavigation() {
                         onSortClick = {
                             sortOption = if (sortOption == SortOption.RELEVANCE) SortOption.PRICE_LOW_HIGH else SortOption.RELEVANCE
                         },
-                        onProductClick = { clickedProduct ->
-                            selectedProductForDetail = clickedProduct
-                            navController.navigate("product_detail")
+                        onProductClick = { clickedProduct: Products ->
+                            productViewModel.selectProduct(clickedProduct)
+                            // ✅ FIXED: Brand page click par bhi dynamic SKU pass hoga
+                            val skuId = clickedProduct.ubuySku ?: "default_id"
+                            navController.navigate("product_detail/$skuId")
                         }
                     )
                 }
 
-                composable("product_detail") {
-                    val fallbackProduct = Product(
-                        name = "Roborock Qrevo Series Robot Vacuum and Mop, 8000Pa Suction, Upgraded Auto Mop Washing Heavy Variant Base Cover",
-                        price = "£29.00",
-                        image = com.manjeet.ubuyapplication.R.drawable.img_4,
-                        category = "Electronics",
-                        brand = "Roborock"
-                    )
+                // ── 🛠️ FIXED SUB-ROUTE: PRODUCT DETAIL WITH VIEWMODEL WRAPPER ──
+                // ── 🛠️ FIXED SUB-ROUTE: PRODUCT DETAIL WITH VIEWMODEL WRAPPER ──
+                composable(
+                    route = "product_detail/{productId}",
+                    arguments = listOf(navArgument("productId") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val productId = backStackEntry.arguments?.getString("productId") ?: ""
 
-                    ProductDetailScreen(
-                        product = selectedProductForDetail ?: fallbackProduct,
-                        onBackClick = { navController.popBackStack() },
-                        onAddToCartClick = {
-                        }
+                    // 1. Initialize your dedicated details handler ViewModel
+                    val productDetailViewModel: com.manjeet.ubuyapplication.viewmodel.ProductDetailViewModel = viewModel()
+
+                    // 2. Extract the parent screen's loaded product list to find matches
+                    val productsList = productViewModel.productsList
+
+                    // Sabse pehle local context nikaal lein
+                    val context = androidx.compose.ui.platform.LocalContext.current
+
+                    // ✅ FIXED: Yahan fetch call ke andar explicit 'productsList' pass kiya taaki ViewModel ka parameter khali na rahe
+                    LaunchedEffect(productId) {
+                        productDetailViewModel.fetchProductDetailsFromList(
+                            context = context,
+                            productsList = productsList,
+                            productId = productId
+                        )
+                    }
+
+                    // 4. Delegate layout rendering to the Route coordinator we built
+                    com.manjeet.ubuyapplication.ui.screens.ProductDetailRoute(
+                        productId = productId,
+                        productsList = productsList,
+                        productViewModel = productDetailViewModel,
+                        navController = navController,
+                        onBackClick = { navController.popBackStack() }
                     )
                 }
-
                 composable(
                     route = "trackOrder?orderId={orderId}",
                     arguments = listOf(navArgument("orderId") { type = NavType.StringType; nullable = true; defaultValue = null })
@@ -307,6 +351,29 @@ fun AppNavigation() {
                 // SUB-ROUTE: UBUY PLUS+ MEMBERSHIP
                 composable("membership") {
                     UbuyMembershipScreen(onBack = { navController.popBackStack() })
+                }
+
+                composable(
+                    route = "description_screen/{descText}",
+                    arguments = listOf(navArgument("descText") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val encodedText = backStackEntry.arguments?.getString("descText") ?: ""
+
+                    // ✅ FIXED: Decoding pipeline explicitly synchronized with Android util framework
+                    val decodedText = try {
+                        val decodedBytes = android.util.Base64.decode(
+                            encodedText,
+                            android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
+                        )
+                        String(decodedBytes, Charsets.UTF_8)
+                    } catch (e: Exception) {
+                        "Description layout extraction missing"
+                    }
+
+                    ProductDescriptionScreen(
+                        htmlDescription = decodedText,
+                        onBackClick = { navController.popBackStack() }
+                    )
                 }
             }
         }

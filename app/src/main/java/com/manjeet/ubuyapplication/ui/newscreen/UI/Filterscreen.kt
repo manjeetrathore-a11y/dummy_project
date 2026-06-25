@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,7 +55,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -69,31 +67,26 @@ import com.manjeet.ubuyapplication.model.DeviceModel
 import com.manjeet.ubuyapplication.model.brandList
 import com.manjeet.ubuyapplication.model.colorOptions
 import com.manjeet.ubuyapplication.model.modelList
-
+// ── Connected ProductViewModel here ──
+import com.manjeet.ubuyapplication.ViewModel.ProductViewModel
 
 @Composable
-fun FilterSheetContent(onApply: () -> Unit, onClear: () -> Unit) {
-    var sliderValue by remember { mutableStateOf(15f..85f) }
+fun FilterSheetContent(
+    viewModel: ProductViewModel, // Injected ViewModel to sync live JSON data states
+    onApply: () -> Unit,
+    onClear: () -> Unit
+) {
     var selectedCategory by remember { mutableStateOf("Price range") }
+
+    // Temporary layout tracking states for incoming live JSON arrays
+    var tempSelectedBrand by remember { mutableStateOf(viewModel.selectedBrand) }
+    var tempSelectedCountry by remember { mutableStateOf(viewModel.selectedCountry) }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .navigationBarsPadding()
-//            .fillMaxHeight()
             .imePadding()
-            // --- THE UNIVERSAL LOCK ---
-            // This intercepts all touch events. It prevents vertical drags
-            // from reaching the BottomSheet while allowing child elements
-            // like Sliders and Lists to still function.
-            .pointerInput(Unit) {
-                detectVerticalDragGestures { change, _ ->
-                    // By just having this here and consuming the change,
-                    // we "steal" the drag from the BottomSheet smoothly.
-                    change.consume()
-                }
-
-            }
     ){
         // --- 1. TOP HEADER ---
         Row(
@@ -117,20 +110,37 @@ fun FilterSheetContent(onApply: () -> Unit, onClear: () -> Unit) {
 
         HorizontalDivider(color = Color(0xFFF2F3F5), thickness = 1.dp)
 
-        // --- 3. DYNAMIC CONTENT AREA (STABILIZED) ---
-
+        // --- 3. DYNAMIC CONTENT AREA (STABILIZED WITH ALL ORIGINAL SECTIONS) ---
         Box(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp)
         ) {
-
             when (selectedCategory) {
                 "Price range" -> PriceRangeSection()
-                "Model" -> ModelSection()
-                "Brand" -> BrandSection()
-                "Color" -> ColorSection()
+                "Model"       -> ModelSection()
+                "Brand"       -> BrandSection()
+                "Color"       -> ColorSection()
+
+                // ── 🌟 LIVE VIEWS LINKED PERFECTLY ──
+                "JSON Live Brands" -> DynamicBrandSection(
+                    availableBrands = viewModel.availableBrands,
+                    selectedBrand = tempSelectedBrand,
+                    onBrandToggle = { brand ->
+                        tempSelectedBrand = if (tempSelectedBrand == brand) null else brand
+                    },
+                    onReset = { tempSelectedBrand = null }
+                )
+                "Shipping Country" -> DynamicCountrySection(
+                    availableCountries = viewModel.availableCountries,
+                    selectedCountry = tempSelectedCountry,
+                    onCountryToggle = { country ->
+                        tempSelectedCountry = if (tempSelectedCountry == country) null else country
+                    },
+                    onReset = { tempSelectedCountry = null }
+                )
+
                 else -> Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
@@ -160,7 +170,13 @@ fun FilterSheetContent(onApply: () -> Unit, onClear: () -> Unit) {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 OutlinedButton(
-                    onClick = onClear,
+                    onClick = {
+                        // Clear original states and viewmodel states together
+                        viewModel.clearAllFilters()
+                        tempSelectedBrand = null
+                        tempSelectedCountry = null
+                        onClear()
+                    },
                     modifier = Modifier.weight(1f).height(54.dp),
                     shape = RoundedCornerShape(18.dp),
                     border = BorderStroke(1.dp, Color(0xFFB87333))
@@ -180,7 +196,12 @@ fun FilterSheetContent(onApply: () -> Unit, onClear: () -> Unit) {
                 }
 
                 Button(
-                    onClick = onApply,
+                    onClick = {
+                        // Bind live JSON variables data inside viewmodel states during final interaction
+                        viewModel.selectBrandFilter(tempSelectedBrand)
+                        viewModel.selectCountryFilter(tempSelectedCountry)
+                        onApply()
+                    },
                     modifier = Modifier.weight(1f).height(54.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF135D39)),
                     shape = RoundedCornerShape(18.dp)
@@ -189,22 +210,20 @@ fun FilterSheetContent(onApply: () -> Unit, onClear: () -> Unit) {
                     Spacer(Modifier.width(8.dp))
                     Text("Apply filters", fontWeight = FontWeight.Bold)
                 }
-
             }
         }
     }
 }
 
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FilterCategoryRow(selectedCategory: String, onCategorySelect: (String) -> Unit) {
     val categories = listOf(
-        "Price range", "Model", "Brand",
-        "Material", "Availability & shipping", "Features", "Color", "Reviews & ratings"
+        "Price range", "Model", "Brand", "Color",
+        "JSON Live Brands", "Shipping Country",
+        "Material", "Availability & shipping", "Features", "Reviews & ratings"
     )
 
-    // FlowRow handles the wrapping automatically
     FlowRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -224,8 +243,8 @@ fun FilterCategoryRow(selectedCategory: String, onCategorySelect: (String) -> Un
                     text = category,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     fontSize = 14.sp,
-                    color = Color.Black, // Text remains black as per screenshot
-                    fontWeight = FontWeight.SemiBold // Matches the professional look
+                    color = Color.Black,
+                    fontWeight = FontWeight.SemiBold
                 )
             }
         }
@@ -236,8 +255,7 @@ fun FilterCategoryRow(selectedCategory: String, onCategorySelect: (String) -> Un
 fun ModelSection() {
     val selectedModels = remember { mutableStateListOf<String>() }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
-        // Header with Refresh Icon
+    Column(modifier = Modifier.fillMaxSize().padding(vertical = 16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -254,9 +272,11 @@ fun ModelSection() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // List of Models
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            modelList.forEach { model ->
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(modelList) { model ->
                 ModelRow(
                     model = model,
                     isSelected = selectedModels.contains(model.name),
@@ -279,7 +299,6 @@ fun ModelRow(model: DeviceModel, isSelected: Boolean, onToggle: () -> Unit) {
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Brown/Orange Checkbox Border
         Box(
             modifier = Modifier
                 .size(20.dp)
@@ -299,7 +318,6 @@ fun ModelRow(model: DeviceModel, isSelected: Boolean, onToggle: () -> Unit) {
             fontWeight = FontWeight.Bold
         )
 
-        // Count Badge
         Surface(
             modifier = Modifier.padding(start = 8.dp),
             color = Color(0xFFF2F4F7),
@@ -315,7 +333,6 @@ fun ModelRow(model: DeviceModel, isSelected: Boolean, onToggle: () -> Unit) {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        // Brand Logo
         Image(
             painter = painterResource(id = model.brandLogo),
             contentDescription = null,
@@ -324,12 +341,11 @@ fun ModelRow(model: DeviceModel, isSelected: Boolean, onToggle: () -> Unit) {
     }
 }
 
-
 @Composable
 fun BrandSection() {
     val selectedBrands = remember { mutableStateListOf<String>() }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxSize().padding(vertical = 16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -347,7 +363,7 @@ fun BrandSection() {
         Spacer(modifier = Modifier.height(16.dp))
 
         LazyColumn(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             userScrollEnabled = true
         ) {
             items(brandList) { brand ->
@@ -363,7 +379,6 @@ fun BrandSection() {
         }
     }
 }
-
 
 @Composable
 fun BrandRow(brand: BrandItem, isChecked: Boolean, onCheckedChange: (Boolean) -> Unit) {
@@ -415,13 +430,11 @@ fun BrandRow(brand: BrandItem, isChecked: Boolean, onCheckedChange: (Boolean) ->
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PriceRangeSection() {
-
     var sliderValue by remember { mutableStateOf(15f..85f) }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(260.dp)
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -469,20 +482,12 @@ fun PriceRangeSection() {
 
         Spacer(modifier = Modifier.height(40.dp))
 
-
         RangeSlider(
             value = sliderValue,
             onValueChange = { sliderValue = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp)
-                // This is the "Hard Lock"
-                .pointerInput(Unit) {
-                    detectVerticalDragGestures { change, _ ->
-
-                        change.consume()
-                    }
-                },
+                .height(60.dp),
             valueRange = 0f..100f,
             colors = SliderDefaults.colors(
                 thumbColor = Color.White,
@@ -522,12 +527,11 @@ fun PriceRangeInput(modifier: Modifier = Modifier, value: String) {
     }
 }
 
-
 @Composable
 fun ColorSection() {
     val selectedColors = remember { mutableStateListOf<String>() }
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxSize().padding(vertical = 16.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -546,9 +550,7 @@ fun ColorSection() {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
+            modifier = Modifier.fillMaxSize(),
             userScrollEnabled = true,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -556,7 +558,6 @@ fun ColorSection() {
             items(colorOptions) { option ->
                 val isSelected = selectedColors.contains(option.name)
 
-                // START YOUR ITEM UI HERE
                 Surface(
                     onClick = {
                         if (isSelected) selectedColors.remove(option.name)
@@ -573,7 +574,6 @@ fun ColorSection() {
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        // Color Circle
                         Box(
                             modifier = Modifier
                                 .size(24.dp)
@@ -595,84 +595,175 @@ fun ColorSection() {
     }
 }
 
-
-// --- PREVIEWS ---
-
-@Preview(showBackground = true, name = "Filter Sheet - Brand View")
+// ── 🌟 FIXED parameter syntax: Added correct colon representation (: type instead of = type) ──
 @Composable
-fun PreviewBrandSelection() {
-    androidx.compose.material3.MaterialTheme {
-        Surface(color = Color.White) {
-            FilterSheetContentPreviewHelper(initialCategory = "Brand")
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "Filter Sheet - Price View")
-@Composable
-fun PreviewPriceRangeSelection() {
-    androidx.compose.material3.MaterialTheme {
-        Surface(color = Color.White) {
-            FilterSheetContentPreviewHelper(initialCategory = "Price range")
-        }
-    }
-}
-
-/**
- * A helper Composable to initialize the state for specific preview scenarios.
- */
-@Composable
-fun FilterSheetContentPreviewHelper(initialCategory: String) {
-    var selectedCategory by remember { mutableStateOf(initialCategory) }
-
-
-    FilterSheetContent(onApply = {}, onClear = {})
-}
-
-@Preview(showBackground = true, name = "Brand Section View")
-@Composable
-fun PreviewBrandSectionOnly() {
-    androidx.compose.material3.MaterialTheme {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(20.dp)
+fun DynamicBrandSection(
+    availableBrands: List<String>,
+    selectedBrand: String?,
+    onBrandToggle: (String) -> Unit, // 👈 FIXED HERE : instead of =
+    onReset: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize().padding(vertical = 16.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            BrandSection()
+            Text("JSON Live Brands", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = "Reset",
+                tint = Color.LightGray,
+                modifier = Modifier.size(20.dp).clickable { onReset() }
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(availableBrands) { brandName ->
+                val isChecked = selectedBrand == brandName
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onBrandToggle(brandName) }
+                        .padding(vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = isChecked,
+                        onCheckedChange = { onBrandToggle(brandName) },
+                        colors = CheckboxDefaults.colors(checkedColor = Color(0xFFB87333))
+                    )
+                    Text(text = brandName, fontSize = 16.sp, modifier = Modifier.padding(start = 8.dp))
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true, name = "Full Filter Sheet - Brand Active")
+// ── 🌟 FIXED parameter syntax: Added correct colon representation (: type instead of = type) ──
 @Composable
-fun PreviewFullFilterBrand() {
-    androidx.compose.material3.MaterialTheme {
-        Surface(color = Color.White) {
-            FilterSheetContent(onApply = {}, onClear = {})
-        }
-    }
-}
-
-@Preview(showBackground = true, name = "Model Selection Preview")
-@Composable
-fun PreviewModelSection() {
-    androidx.compose.material3.MaterialTheme {
-        Surface(
-            modifier = Modifier.fillMaxWidth().padding(20.dp),
-            color = Color.White
+fun DynamicCountrySection(
+    availableCountries: List<String>,
+    selectedCountry: String?,
+    onCountryToggle: (String) -> Unit, // 👈 FIXED HERE : instead of =
+    onReset: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxSize().padding(vertical = 16.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            ModelSection()
+            Text("Shipping Country", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Icon(
+                imageVector = Icons.Default.Refresh,
+                contentDescription = "Reset",
+                tint = Color.LightGray,
+                modifier = Modifier.size(20.dp).clickable { onReset() }
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(availableCountries) { countryName ->
+                val isChecked = selectedCountry == countryName
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onCountryToggle(countryName) }
+                        .padding(vertical = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Checkbox(
+                        checked = isChecked,
+                        onCheckedChange = { onCountryToggle(countryName) },
+                        colors = CheckboxDefaults.colors(checkedColor = Color(0xFFB87333))
+                    )
+                    Text(text = countryName, fontSize = 16.sp, modifier = Modifier.padding(start = 8.dp))
+                }
+            }
         }
     }
 }
 
-@Preview(showBackground = true, name = "Color Grid Preview")
-@Composable
-fun PreviewColorSection() {
-    androidx.compose.material3.MaterialTheme {
-        Surface(color = Color.White, modifier = Modifier.padding(20.dp)) {
-            ColorSection()
-        }
-    }
-}
+
+
+//// --- PREVIEWS ---
+//
+//@Preview(showBackground = true, name = "Filter Sheet - Brand View")
+//@Composable
+//fun PreviewBrandSelection() {
+//    androidx.compose.material3.MaterialTheme {
+//        Surface(color = Color.White) {
+//            FilterSheetContentPreviewHelper(initialCategory = "Brand")
+//        }
+//    }
+//}
+//
+//@Preview(showBackground = true, name = "Filter Sheet - Price View")
+//@Composable
+//fun PreviewPriceRangeSelection() {
+//    androidx.compose.material3.MaterialTheme {
+//        Surface(color = Color.White) {
+//            FilterSheetContentPreviewHelper(initialCategory = "Price range")
+//        }
+//    }
+//}
+//
+///**
+// * A helper Composable to initialize the state for specific preview scenarios.
+// */
+//@Composable
+//fun FilterSheetContentPreviewHelper(initialCategory: String) {
+//    var selectedCategory by remember { mutableStateOf(initialCategory) }
+//
+//
+//    FilterSheetContent(onApply = {}, onClear = {})
+//}
+//
+//@Preview(showBackground = true, name = "Brand Section View")
+//@Composable
+//fun PreviewBrandSectionOnly() {
+//    androidx.compose.material3.MaterialTheme {
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .background(Color.White)
+//                .padding(20.dp)
+//        ) {
+//            BrandSection()
+//        }
+//    }
+//}
+//
+//@Preview(showBackground = true, name = "Full Filter Sheet - Brand Active")
+//@Composable
+//fun PreviewFullFilterBrand() {
+//    androidx.compose.material3.MaterialTheme {
+//        Surface(color = Color.White) {
+//            FilterSheetContent(onApply = {}, onClear = {})
+//        }
+//    }
+//}
+//
+//@Preview(showBackground = true, name = "Model Selection Preview")
+//@Composable
+//fun PreviewModelSection() {
+//    androidx.compose.material3.MaterialTheme {
+//        Surface(
+//            modifier = Modifier.fillMaxWidth().padding(20.dp),
+//            color = Color.White
+//        ) {
+//            ModelSection()
+//        }
+//    }
+//}
+//
+//@Preview(showBackground = true, name = "Color Grid Preview")
+//@Composable
+//fun PreviewColorSection() {
+//    androidx.compose.material3.MaterialTheme {
+//        Surface(color = Color.White, modifier = Modifier.padding(20.dp)) {
+//            ColorSection()
+//        }
+//    }
+//}

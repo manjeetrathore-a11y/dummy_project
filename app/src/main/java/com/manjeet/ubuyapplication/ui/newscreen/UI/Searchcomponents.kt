@@ -34,7 +34,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,9 +52,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
+// ── Coil Import dynamic image URL network loading ke liye ──
+import coil.compose.AsyncImage
 import com.manjeet.ubuyapplication.R
-import com.manjeet.ubuyapplication.model.Product
+// ── Products model import ──
+import com.manjeet.ubuyapplication.model.Products
 import com.manjeet.ubuyapplication.utils.SortOption
 import java.text.DecimalFormat
 
@@ -63,20 +64,16 @@ import java.text.DecimalFormat
 @Composable
 fun BrandPageContent(
     brandName: String,
-    products: List<Product>,
+    products: List<Products>,
     isTransitioning: Boolean,
     currentSort: SortOption,
     onSortClick: () -> Unit,
-    onProductClick: (Product) -> Unit
+    onProductClick: (Products) -> Unit
 ) {
     val sortedProducts = when (currentSort) {
         SortOption.RELEVANCE -> products
-        SortOption.PRICE_LOW_HIGH -> products.sortedBy {
-            it.price.filter { char -> char.isDigit() }.toIntOrNull() ?: 0
-        }
-        SortOption.PRICE_HIGH_LOW -> products.sortedByDescending {
-            it.price.filter { char -> char.isDigit() }.toIntOrNull() ?: 0
-        }
+        SortOption.PRICE_LOW_HIGH -> products.sortedBy { it.price ?: 0 }
+        SortOption.PRICE_HIGH_LOW -> products.sortedByDescending { it.price ?: 0 }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -94,7 +91,6 @@ fun BrandPageContent(
                 contentPadding = PaddingValues(bottom = 16.dp, start = 16.dp, end = 16.dp)
             ) {
                 items(sortedProducts) { product ->
-
                     SearchResultItem(
                         product = product,
                         onProductClick = onProductClick
@@ -109,7 +105,8 @@ fun BrandPageContent(
                         ) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(24.dp),
-                                strokeWidth = 2.dp
+                                strokeWidth = 2.dp,
+                                color = Color(0xFFB87333)
                             )
                         }
                     }
@@ -248,15 +245,15 @@ fun ActionButtonPill(icon: ImageVector, text: String, onClick: () -> Unit) {
 
 @Composable
 fun SearchResultItem(
-    product: Product,
-    onProductClick: (Product) -> Unit
+    product: Products,
+    onProductClick: (Products) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable { onProductClick(product) },
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -271,24 +268,32 @@ fun SearchResultItem(
                 modifier = Modifier.width(100.dp)
             ) {
                 Box {
-                    Image(
-                        painter = painterResource(id = product.image),
+                    // ── 🌟 EXACT ORIGINAL STRUCTURE WITH DYNAMIC ASYNC IMAGE ──
+                    AsyncImage(
+                        model = product.image, // JSON URL image loading source
                         contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                        placeholder = painterResource(id = R.drawable.img_4), // Placeholder fallback matching layout
+                        error = painterResource(id = R.drawable.img_4),
                         modifier = Modifier
                             .size(100.dp)
                             .background(Color(0xFFF9F9F9), RoundedCornerShape(8.dp))
                     )
-                    Surface(
-                        color = Color(0xFFFFC107),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier.align(Alignment.TopStart)
-                    ) {
-                        Text(
-                            "32% off",
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
-                        )
+
+                    val discountPercent = product.discount ?: 32 // Keeps exact layout parameters
+                    if (discountPercent > 0) {
+                        Surface(
+                            color = Color(0xFFFFC107),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier.align(Alignment.TopStart)
+                        ) {
+                            Text(
+                                "$discountPercent% off",
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
                     }
                 }
 
@@ -344,7 +349,10 @@ fun SearchResultItem(
                             )
                         }
                     }
-                    Text(" 4.5 (24)", fontSize = 11.sp, color = Color.Gray)
+                    val formattedRating = product.rating ?: 4.5
+                    val formattedCount = product.ratingCount ?: 24
+                    Text(" $formattedRating ($formattedCount)", fontSize = 11.sp, color = Color.Gray)
+
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
                         imageVector = Icons.Default.FavoriteBorder,
@@ -356,16 +364,18 @@ fun SearchResultItem(
 
                 Spacer(Modifier.height(6.dp))
 
-                Text(text = "Ubuy Store ", color = Color.Black, fontSize = 12.sp)
+                // 🌟 Exact original typography setup maintained
+                Text(text = "${product.store ?: "Ubuy Store"} ", color = Color.Black, fontSize = 12.sp)
 
                 Spacer(Modifier.height(6.dp))
 
                 Text(
-                    text = product.name,
+                    text = product.name ?: "",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.Black
                 )
                 Spacer(Modifier.height(6.dp))
 
@@ -380,7 +390,7 @@ fun SearchResultItem(
                         modifier = Modifier.size(14.dp)
                     )
                     Text(
-                        " Global Store",
+                        " ${product.country ?: "Global Store"}",
                         fontSize = 11.sp,
                         color = Color.Black,
                         modifier = Modifier.padding(start = 4.dp)
@@ -390,19 +400,22 @@ fun SearchResultItem(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Row(verticalAlignment = Alignment.Bottom) {
+                    val currencySymbol = product.currency ?: "£"
                     Text(
-                        text = product.price,
+                        text = "$currencySymbol${product.price ?: 0}",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.Black
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "£34.99",
-                        fontSize = 14.sp,
-                        color = Color.Red,
-                        style = TextStyle(textDecoration = TextDecoration.LineThrough)
-                    )
+                    if (product.oldPrice != null) {
+                        Text(
+                            text = "$currencySymbol${product.oldPrice}",
+                            fontSize = 14.sp,
+                            color = Color.Red,
+                            style = TextStyle(textDecoration = TextDecoration.LineThrough)
+                        )
+                    }
                 }
             }
         }
@@ -440,71 +453,6 @@ fun BrandLogoCircle(brandName: String, brandLogo: Int, onClick: () -> Unit) {
                 )
                 Text(text = brandName, fontSize = 8.sp, fontWeight = FontWeight.SemiBold, color = Color.Gray)
             }
-        }
-    }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ✅ TOP LEVEL PREVIEWS (Fixed Lambda Parameters Setup)
-// ─────────────────────────────────────────────────────────────────────────────
-
-@Preview(name = "1. Single Search Result Item Card", showBackground = true, backgroundColor = 0xFFF2F3F5)
-@Composable
-fun SearchResultItemPreview() {
-    MaterialTheme {
-        Box(modifier = Modifier.padding(16.dp)) {
-            val mockProduct = Product(
-                name = "CASEKOO Armor Shockproof Designed for iPhone 17 Pro Case [16FT Military Grade Protection] Multi Layer Cover",
-                price = "£29.99",
-                image = R.drawable.img_4,
-                category = "Mobiles",
-                brand = "Apple"
-            )
-            SearchResultItem(product = mockProduct, onProductClick = {})
-        }
-    }
-}
-
-@Preview(name = "2. Brand Page Content - Active List State", showBackground = true)
-@Composable
-fun BrandPageContentActivePreview() {
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = Color(0xFFDBE5EF)) {
-            val mockBrandProducts = listOf(
-                Product("Apple iPhone 17 Pro Max Ultra Heavy Case", "£1299", R.drawable.img_4, "Mobiles", "APPLE"),
-                Product("Apple iPhone 16 Pro Leather Shell Plus", "£1099", R.drawable.img_7, "Mobiles", "APPLE"),
-                Product("Apple iPhone 15 Premium Silicone Case", "£45", R.drawable.img_6, "Mobiles", "APPLE")
-            )
-
-            BrandPageContent(
-                brandName = "APPLE",
-                products = mockBrandProducts,
-                isTransitioning = false,
-                currentSort = SortOption.RELEVANCE,
-                onSortClick = {},
-                onProductClick = {}
-            )
-        }
-    }
-}
-
-@Preview(name = "3. Brand Page Content - Transition Loading State", showBackground = true)
-@Composable
-fun BrandPageContentLoadingPreview() {
-    MaterialTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = Color(0xFFDBE5EF)) {
-            val mockBrandProducts = listOf(
-                Product("Apple iPhone 17 Pro Max Ultra Heavy Case", "£1299", R.drawable.img_4, "Mobiles", "APPLE")
-            )
-
-            BrandPageContent(
-                brandName = "APPLE",
-                products = mockBrandProducts,
-                isTransitioning = true,
-                currentSort = SortOption.RELEVANCE,
-                onSortClick = {},
-                onProductClick = {}
-            )
         }
     }
 }

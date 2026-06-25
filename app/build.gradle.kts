@@ -72,9 +72,11 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+    implementation(libs.androidx.ui)
     implementation(libs.material) // Use the latest stable version
 
     implementation("androidx.browser:browser:1.8.0")
+
 
 
 

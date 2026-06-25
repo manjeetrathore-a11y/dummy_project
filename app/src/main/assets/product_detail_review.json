@@ -1,0 +1,123 @@
+{
+  "error": false,
+  "code": "0",
+  "msg": "success",
+  "modifyData": {
+    "what_stands_out": null,
+    "ai_related_search_keyword": null,
+    "local_what_stands_out": null,
+    "what_stands_out_title": null,
+    "local_what_stands_out_title": null,
+    "who_should_buy": null,
+    "local_who_should_buy": null,
+    "who_should_buy_title": null,
+    "local_who_should_buy_title": null,
+    "nutritionist_take": null,
+    "local_nutritionist_take": null,
+    "nutritionist_take_title": null,
+    "local_nutritionist_take_title": null,
+    "product_ai_description": null,
+    "relatedproducts": null,
+    "otherproducts": null,
+    "customer_rating_detail": {
+      "total_rating": 4.5,
+      "total_review": 15,
+      "rating_breakdown": {
+        "5": 8,
+        "4": 5,
+        "3": 1,
+        "2": 0,
+        "1": 0
+      }
+    },
+    "recommendation_summary": {
+      "recommend_percentage": 94,
+      "complaint_rate": "0.71%"
+    },
+    "review_data": [
+      {
+        "nickname": "Luke DeLucca",
+        "country": "Canada",
+        "created_at": "2025-10-27",
+        "rating": 5,
+        "verified_purchase": true,
+        "title": "These snaps on effortlessly",
+        "detail": "These snaps on effortlessly and feels amazing in hand, slim but sturdy.",
+        "img_array": [
+          "https://m.media-amazon.com/images/I/719LtEUCleL._AC_UC154,154_CACC,154,154_QL85_.jpg?aicid=community-reviews",
+          "https://m.media-amazon.com/images/I/719LtEUCleL._SY500_.jpg"
+        ]
+      },
+      {
+        "nickname": "Rose Anderson",
+        "country": "France",
+        "created_at": "2025-10-27",
+        "rating": 4,
+        "verified_purchase": true,
+        "title": "Really sleek and lightweight",
+        "detail": "Really sleek and lightweight, fits the iPhone 17 Pro perfectly.",
+        "img_array": [
+          "https://m.media-amazon.com/images/I/719LtEUCleL._AC_UC154,154_CACC,154,154_QL85_.jpg?aicid=community-reviews",
+          "https://m.media-amazon.com/images/I/71eeF1H309L._SY500_.jpg"
+        ]
+      }
+    ],
+    "review_actions": {
+      "read_all_reviews": true,
+      "write_review": true
+    },
+    "user_review": {
+      "customer_name": "Current User",
+      "country": "USA",
+      "review_date": "2025-10-11",
+      "rating": 5,
+      "review_badge": "Excellent",
+      "review_images": [
+        "https://m.media-amazon.com/images/I/719LtEUCleL._AC_UC154,154_CACC,154,154_QL85_.jpg?aicid=community-reviews",
+        "https://m.media-amazon.com/images/I/71eeF1H309L._SY500_.jpg"
+      ],
+      "review_text": "Clean & flawlessly and empties itself total time saver."
+    },
+    "payment_methods": [
+      {
+        "image_path": "https://ubuykw.s3.amazonaws.com/ubuycom/homebanner/payment_methods-158997734846.png",
+        "title": "Paypal"
+      }
+    ],
+    "installment_provider": {
+      "name": "Klarna",
+      "message": "Buy now, pay in 30 days.",
+      "learn_more_text": "Learn more",
+      "img_url": "https://d2ati23fc66y9j.cloudfront.net/assets/app/categories/klarna.png",
+      "learn_more_url": "#"
+    },
+    "related_brand": [],
+    "related_category": [],
+    "work_well_with": [
+      {
+        "product_title": "Screen Protector for iPhone 17 Pro",
+        "img_url": "https://d2ati23fc66y9j.cloudfront.net/assets/images/detail/solar_panels.png.webp",
+        "url": "",
+        "description": "High-quality tempered glass screen protector designed to fit the iPhone 17 Pro perfectly, providing maximum protection against scratches and drops."
+      },
+      {
+        "product_title": "Wireless Charger for iPhone 17 Pro",
+        "img_url": "https://d2ati23fc66y9j.cloudfront.net/assets/images/detail/wireless_charger.png.webp",
+        "url": "",
+        "description": "Fast wireless charger compatible with the iPhone 17 Pro, offering convenient and efficient charging without the need for cables."
+      }
+    ],
+    "login_user_review": [],
+    "choose_product": {
+      "title": "Why choose this product?",
+      "features": [
+        "Reduces hair shedding by 37% within 8 weeks (clinical study)",
+        "5% biotin + keratin peptides for cellular-level nourishment",
+        "Gentler than minoxidil — no 'dread shed' or scalp irritation",
+        "Works for men & women: thinning hair, postpartum loss, beard growth",
+        "60-day supply with twice-daily use",
+        "89% of users would recommend to a friend"
+      ]
+    }
+  }
+}

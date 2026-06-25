@@ -1,0 +1,97 @@
+{
+  "error": false,
+  "code": "0",
+  "msg": "success",
+  "data": {
+    "pros_cons": {
+      "cons": [
+        "No indication that the jewelry is made with real precious stones or metal."
+      ],
+      "local_cons": [
+        "No indication that the jewelry is made with real precious stones or metal."
+      ],
+      "pros": [
+        "Shifts colors in different lighting conditions",
+        "Silver frame secures the gems well while allowing light to pass through",
+        "Solid craftsmanship",
+        "Comes at a great price",
+        "Beautiful and elegant design"
+      ],
+      "local_pros": [
+        "Shifts colors in different lighting conditions",
+        "Silver frame secures the gems well while allowing light to pass through",
+        "Solid craftsmanship",
+        "Comes at a great price",
+        "Beautiful and elegant design"
+      ],
+      "editorial_review": "The Birthstone Necklace for Women Mom is a beautiful and elegant necklace that looks even better in person. The alexandrite gemstone clearly shifts colors in different lighting conditions and the silver frame makes sure that the light passes through the entire gem, highlighting the beautiful cuts and facets of the jewel. The craftsmanship of the necklace is solid and it feels firm enough to not break easily. The necklace also comes at a great price, making it an excellent gift for yourself or your loved one. Overall, this necklace is an amazing piece of jewelry that looks much more expensive than it actually is and is definitely worth buying.",
+      "local_editorial_review": "The Birthstone Necklace for Women Mom is a beautiful and elegant necklace that looks even better in person. The alexandrite gemstone clearly shifts colors in different lighting conditions and the silver frame makes sure that the light passes through the entire gem, highlighting the beautiful cuts and facets of the jewel. The craftsmanship of the necklace is solid and it feels firm enough to not break easily. The necklace also comes at a great price, making it an excellent gift for yourself or your loved one. Overall, this necklace is an amazing piece of jewelry that looks much more expensive than it actually is and is definitely worth buying."
+    },
+    "features": {
+      "quote": "The Yuusei Outdoor String Light LED is an energy-efficient, weatherproof 100ft globe patio light with 50+2 (spare) 1W G40 PC shatterproof bulbs that provide a soft romantic atmosphere ideal for decorating and illuminating any indoor or outdoor space. It is connectable up to 8 strands and compatible with most dimmers in the market for your flexible outdoor decor.",
+      "local_quote": "The Yuusei Outdoor String Light LED is an energy-efficient, weatherproof 100ft globe patio light with 50+2 (spare) 1W G40 PC shatterproof bulbs that provide a soft romantic atmosphere ideal for decorating and illuminating any indoor or outdoor space. It is connectable up to 8 strands and compatible with most dimmers in the market for your flexible outdoor decor.",
+      "features": [
+        "100ft outdoor string lights that can be connected up to 8 strands",
+        "Energy-efficient with 1W consumption resulting in savings of up to 80%",
+        "Compatible with most dimmers in the market",
+        "Weatherproof and ideal for year-round outdoor use",
+        "PET shatterproof bulbs for safe and durable use",
+        "Suitable for decorating and illuminating indoor and outdoor spaces"
+      ],
+      "local_features": [
+        "100ft outdoor string lights that can be connected up to 8 strands",
+        "Energy-efficient with 1W consumption resulting in savings of up to 80%",
+        "Compatible with most dimmers in the market",
+        "Weatherproof and ideal for year-round outdoor use",
+        "PET shatterproof bulbs for safe and durable use",
+        "Suitable for decorating and illuminating indoor and outdoor spaces"
+      ],
+      "faq": [
+        {
+          "question": "How many bulbs are included in the package?",
+          "answer": "The package comes with 50 clear bulbs and 2 spare bulbs."
+        },
+        {
+          "question": "Are the bulbs dimmable?",
+          "answer": "Yes, the bulbs have built-in dimmable chips and are compatible with most dimmers in the market."
+        },
+        {
+          "question": "Is it easy to install?",
+          "answer": "Yes, it is easy to install. Just screw the G40 LED bulbs into the E12 sockets, and hang the entire light string onto your outdoor wall, fence, railing, or free-standing poles."
+        }
+      ],
+      "local_faq": [
+        {
+          "question": "How many bulbs are included in the package?",
+          "answer": "The package comes with 50 clear bulbs and 2 spare bulbs."
+        },
+        {
+          "question": "Are the bulbs dimmable?",
+          "answer": "Yes, the bulbs have built-in dimmable chips and are compatible with most dimmers in the market."
+        },
+        {
+          "question": "Is it easy to install?",
+          "answer": "Yes, it is easy to install. Just screw the G40 LED bulbs into the E12 sockets, and hang the entire light string onto your outdoor wall, fence, railing, or free-standing poles."
+        }
+      ],
+      "other_faq": [],
+      "local_other_faq": [],
+      "detail_features": [
+        "Doctor's Best 5-HTP, 100 mg, 60 Veggie Caps",
+        "Contains 5-hydroxy L-tryptophan from Griffonia simplicifolia plant",
+        "Promotes healthy sleep, calm, and relaxation",
+        "Supports mental and emotional well-being",
+        "Tested to ensure it does not contain Peak X",
+        "Adults take 1 capsule daily with or without food, as recommended by physician"
+      ],
+      "local_detail_features": [
+        "Doctor's Best 5-HTP, 100 mg, 60 Veggie Caps",
+        "Contains 5-hydroxy L-tryptophan from Griffonia simplicifolia plant",
+        "Promotes healthy sleep, calm, and relaxation",
+        "Supports mental and emotional well-being",
+        "Tested to ensure it does not contain Peak X",
+        "Adults take 1 capsule daily with or without food, as recommended by physician"
+      ]
+    }
+  }
+}
